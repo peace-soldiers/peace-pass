@@ -2,1796 +2,1960 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Peace Soldiers • Peace Pass</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f3f0e8" />
+  <title>Peace Soldiers · Peace Pass</title>
 
-  <!-- Persian-friendly font (optional, safe fallback) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Telegram WebApp SDK (safe to keep even on web) -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     :root{
-      /* Approved “paper + soft watercolor” direction, with a bit more contrast */
-      --bg: #f3efe7;
-      --paper: #f7f2e9;
-      --paper2:#fbf7f0;
+      /* Approved vibe: warm paper, calm olive, soft gold */
+      --bg:#f2efe7;
+      --paper:#fbf8f1;
+      --paper2:#f7f3ea;
+      --ink:#1f2422;
+      --muted:#5a655f;
+      --line:rgba(0,0,0,.10);
 
-      --ink: #171717;
-      --muted:#5f5f5f;
-      --soft:#7a7a7a;
+      --shadow:0 18px 44px rgba(0,0,0,.10);
+      --shadow2:0 10px 26px rgba(0,0,0,.08);
+      --radius:18px;
 
-      --line: rgba(0,0,0,.07);
-      --stroke: rgba(0,0,0,.14);
-      --card: rgba(255,255,255,.78);
+      --olive:#2f6b57;
+      --olive2:#275a4a;
+      --gold:#b28a3c;
+      --gold2:#8f6b2b;
 
-      --shadow: 0 14px 34px rgba(0,0,0,.08);
-      --shadow2: 0 8px 18px rgba(0,0,0,.06);
+      --btn:#151716;
+      --btnText:#ffffff;
 
-      --radius: 18px;
-      --radius2: 14px;
-      --pill: 999px;
+      /* Typography: smaller/minimal */
+      --base:13.5px;
+      --h1:34px;
+      --h2:18px;
+      --h3:15px;
+      --small:12px;
+      --tiny:11px;
 
-      /* Accents (olive + warm gold, slightly richer) */
-      --olive: #2f6d55;
-      --olive2:#3e7c62;
-      --gold:  #b18b3d;
-      --gold2: #c59b4a;
-
-      --btn: #141414;
-      --btnText: #ffffff;
-
-      /* Typography (smaller/minimal as requested) */
-      --base: 13px;
-      --h1: 30px;
-      --h2: 18px;
-      --h3: 14px;
-      --small: 12px;
-      --tiny: 11px;
+      --max:1040px;
     }
 
-    *{ box-sizing:border-box; }
-    html, body { height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      background: radial-gradient(1200px 600px at 30% -10%, rgba(47,109,85,.10), transparent 55%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(177,139,61,.10), transparent 60%),
-                  var(--bg);
+      font:400 var(--base)/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,"Tahoma";
       color:var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-size: var(--base);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Persian */
-    html[lang="fa"] body{
-      font-family: "Vazirmatn", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-size: 14px; /* tiny bump for readability in FA */
-    }
-
-    a{ color: inherit; }
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 18px 14px 90px;
-    }
-
-    /* “paper” container */
-    .paper{
       background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(0,0,0,0) 0px,
-          rgba(0,0,0,0) 26px,
-          var(--line) 27px,
-          rgba(0,0,0,0) 28px
-        ),
-        linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.35)),
-        var(--paper);
-      border: 1px solid rgba(0,0,0,.10);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
+        radial-gradient(900px 420px at 18% 8%, rgba(47,107,87,.12), transparent 55%),
+        radial-gradient(780px 420px at 82% 10%, rgba(178,138,60,.12), transparent 55%),
+        radial-gradient(780px 520px at 60% 85%, rgba(0,0,0,.05), transparent 62%),
+        var(--bg);
     }
 
-    .header{
-      padding: 18px 18px 14px;
-      border-bottom: 1px solid rgba(0,0,0,.10);
-      position: relative;
+    /* Subtle paper lines */
+    .paper-lines{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.06) 1px, transparent 1px);
+      background-size:100% 28px;
+      opacity:.10;
+      pointer-events:none;
+      border-radius:inherit;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.60), rgba(0,0,0,.20));
     }
 
-    .brandRow{
+    a{color:inherit}
+    .app{
+      min-height:100%;
       display:flex;
-      align-items:flex-start;
+      justify-content:center;
+      padding:22px 16px 88px;
+    }
+
+    .shell{
+      width:min(var(--max), 100%);
+      position:relative;
+    }
+
+    /* Top hero */
+    .hero{
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.62));
+      box-shadow:var(--shadow2);
+      overflow:hidden;
+      padding:16px 16px 12px;
+      position:relative;
+      backdrop-filter:saturate(1.1) blur(3px);
+    }
+
+    .hero .brand{
+      display:flex;
+      align-items:flex-end;
       justify-content:space-between;
       gap:12px;
     }
 
-    .brand{
+    .titleWrap{
       display:flex;
-      align-items:flex-start;
-      gap:12px;
-      min-width: 0;
-    }
-
-    .mark{
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(47,109,85,.18), rgba(177,139,61,.12));
-      border: 1px solid rgba(0,0,0,.10);
-      display:grid;
-      place-items:center;
-      flex: 0 0 auto;
-      margin-top: 4px;
-    }
-
-    .mark span{
-      font-weight: 700;
-      color: var(--olive);
-      letter-spacing: .5px;
-    }
-
-    .brandText{
+      flex-direction:column;
+      gap:2px;
       min-width:0;
     }
 
-    .title{
-      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-      font-size: var(--h1);
-      line-height: 1.0;
-      margin: 0;
-      letter-spacing: .2px;
+    .brandTitle{
+      font-weight:700;
+      letter-spacing:.2px;
+      font-size:var(--h1);
+      line-height:1.03;
+    }
+    .brandSub{
+      color:var(--muted);
+      font-size:var(--small);
+      letter-spacing:.22px;
     }
 
-    html[lang="fa"] .title{
-      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
-    }
-
-    .subtitle{
-      margin: 4px 0 0;
-      color: var(--soft);
-      font-size: var(--small);
-      letter-spacing: .2px;
-    }
-
-    /* language toggle (fix: never hidden on mobile) */
     .langBox{
       display:flex;
       align-items:center;
       gap:8px;
-      flex: 0 0 auto;
+      flex:0 0 auto;
     }
 
-    .langPills{
+    .pill{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.78);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:var(--tiny);
+      color:var(--muted);
       display:flex;
       align-items:center;
-      gap:6px;
-      padding: 6px;
-      border-radius: var(--pill);
-      background: rgba(255,255,255,.55);
-      border: 1px solid rgba(0,0,0,.10);
-      box-shadow: var(--shadow2);
-      white-space: nowrap;
+      gap:8px;
+      white-space:nowrap;
     }
 
-    .langBtn{
-      border: 1px solid rgba(0,0,0,.14);
-      background: rgba(255,255,255,.7);
-      color: var(--ink);
-      border-radius: var(--pill);
-      padding: 6px 10px;
-      font-size: var(--tiny);
+    .seg{
+      display:inline-flex;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      border-radius:999px;
+      padding:3px;
+      gap:3px;
+      box-shadow:0 6px 14px rgba(0,0,0,.06);
+    }
+    .seg button{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:var(--tiny);
+      color:var(--muted);
       cursor:pointer;
-      line-height: 1;
+      min-width:44px;
+    }
+    .seg button.active{
+      background:var(--btn);
+      color:var(--btnText);
     }
 
-    .langBtn.active{
-      background: var(--btn);
-      color: var(--btnText);
-      border-color: rgba(0,0,0,.18);
-    }
-
-    .tabs{
-      margin-top: 12px;
+    .navPills{
+      margin-top:10px;
       display:flex;
+      flex-wrap:wrap;
       gap:8px;
       align-items:center;
-      overflow:auto;
-      padding-bottom: 6px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      justify-content:center;
     }
-    .tabs::-webkit-scrollbar{ display:none; }
 
-    .tab{
-      border: 1px solid rgba(0,0,0,.14);
-      background: rgba(255,255,255,.62);
-      border-radius: var(--pill);
-      padding: 8px 12px;
-      font-size: var(--small);
+    .navPills .navBtn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.78);
+      color:var(--ink);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:var(--tiny);
       cursor:pointer;
-      white-space: nowrap;
-      transition: transform .08s ease, background .15s ease;
+      transition:transform .12s ease, background .12s ease;
       user-select:none;
     }
-    .tab:active{ transform: scale(.98); }
-    .tab.active{
-      background: var(--btn);
-      color: var(--btnText);
-      border-color: rgba(0,0,0,.18);
+    .navPills .navBtn:hover{transform:translateY(-1px)}
+    .navPills .navBtn.active{
+      background:var(--btn);
+      color:var(--btnText);
+      border-color:rgba(0,0,0,.18);
     }
 
-    .lead{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: var(--small);
-      line-height: 1.55;
+    .heroNote{
+      margin-top:10px;
+      text-align:center;
+      color:var(--muted);
+      font-size:var(--tiny);
+      max-width:860px;
+      margin-left:auto;
+      margin-right:auto;
     }
 
-    .content{
-      padding: 16px 18px 18px;
-    }
-
+    /* Main grid */
     .grid{
       display:grid;
-      grid-template-columns: 1.25fr .95fr;
-      gap: 14px;
+      grid-template-columns: 1.05fr .95fr;
+      gap:14px;
+      margin-top:14px;
       align-items:start;
     }
 
-    .card{
-      background: var(--card);
-      border: 1px solid rgba(0,0,0,.12);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding: 14px;
+    @media (max-width: 940px){
+      .grid{grid-template-columns:1fr}
     }
 
-    .cardHeader{
+    .card{
+      position:relative;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.74));
+      box-shadow:var(--shadow2);
+      overflow:hidden;
+    }
+
+    .cardInner{padding:14px}
+    .cardTitle{
+      font-size:var(--h2);
+      font-weight:700;
+      margin:0 0 6px;
+      letter-spacing:.1px;
+    }
+    .cardDesc{
+      margin:0;
+      color:var(--muted);
+      font-size:var(--small);
+    }
+
+    /* Snapshot card (home) */
+    .snapshot{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:12px;
+      align-items:start;
+    }
+
+    .profile{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width:0;
+    }
+
+    .avatar{
+      width:52px; height:52px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:
+        radial-gradient(30px 30px at 35% 30%, rgba(178,138,60,.30), transparent 60%),
+        radial-gradient(30px 30px at 70% 70%, rgba(47,107,87,.20), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.70));
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 10px;
+      justify-content:center;
+      font-weight:800;
+      color:rgba(0,0,0,.55);
+      flex:0 0 auto;
     }
 
-    .cardTitle{
+    .pmeta{min-width:0}
+    .pname{
+      font-weight:800;
+      letter-spacing:.1px;
+      font-size:15px;
+      line-height:1.2;
       margin:0;
-      font-size: var(--h2);
-      letter-spacing: .2px;
-      font-weight: 800;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
-    html[lang="fa"] .cardTitle{ font-weight: 800; }
-
-    .cardSub{
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: var(--small);
-      line-height: 1.55;
+    .pid{
+      margin:3px 0 0;
+      font-size:var(--tiny);
+      color:var(--muted);
     }
 
-    .pillRow{
+    .badgeCol{
       display:flex;
+      flex-direction:column;
+      align-items:flex-end;
       gap:8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
+    }
+
+    .levelBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(47,107,87,.28);
+      background:rgba(47,107,87,.10);
+      color:var(--olive2);
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:var(--tiny);
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .hiiBox{
+      width:100%;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      border-top:1px solid var(--line);
+      padding-top:10px;
+      margin-top:10px;
+    }
+
+    .hiiLabel{
+      color:var(--muted);
+      font-size:var(--tiny);
+      margin:0;
+    }
+    .hiiValue{
+      font-weight:900;
+      font-size:34px;
+      line-height:1;
+      margin:3px 0 0;
+      letter-spacing:.2px;
+    }
+
+    .progressWrap{
+      margin-top:10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      height:12px;
+      background:rgba(255,255,255,.65);
+      overflow:hidden;
+      position:relative;
+    }
+    .progressBar{
+      height:100%;
+      width:46%;
+      background:linear-gradient(90deg, rgba(178,138,60,.92), rgba(47,107,87,.72));
+      border-right:1px solid rgba(0,0,0,.10);
+    }
+    .progressMeta{
+      margin-top:6px;
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:var(--tiny);
+    }
+
+    /* Next action / converter */
+    .actionRow{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      gap:12px;
+      margin-top:12px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(178,138,60,.22);
+      background:
+        radial-gradient(240px 140px at 80% 40%, rgba(178,138,60,.20), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.68));
+    }
+    .actionTitle{
+      margin:0;
+      font-weight:900;
+      letter-spacing:.2px;
+      font-size:20px;
+      line-height:1.1;
+    }
+    .actionSub{
+      margin:6px 0 0;
+      font-size:var(--small);
+      color:var(--muted);
     }
 
     .btn{
-      border: 1px solid rgba(0,0,0,.16);
-      background: rgba(255,255,255,.7);
-      color: var(--ink);
-      border-radius: var(--pill);
-      padding: 10px 14px;
-      font-size: var(--small);
+      border:0;
       cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:800;
+      font-size:var(--tiny);
+      letter-spacing:.2px;
+      background:var(--btn);
+      color:var(--btnText);
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
+      transition:transform .12s ease;
       user-select:none;
     }
-    .btn.primary{
-      background: var(--btn);
-      color: var(--btnText);
-      border-color: rgba(0,0,0,.18);
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{
+      background:rgba(255,255,255,.84);
+      color:var(--ink);
+      border:1px solid var(--line);
+      box-shadow:none;
     }
     .btn.olive{
-      background: rgba(47,109,85,.12);
-      border-color: rgba(47,109,85,.25);
+      background:linear-gradient(180deg, var(--olive), var(--olive2));
     }
     .btn.gold{
-      background: rgba(177,139,61,.14);
-      border-color: rgba(177,139,61,.30);
+      background:linear-gradient(180deg, var(--gold), var(--gold2));
     }
 
-    .mini{
-      font-size: var(--tiny);
-      color: var(--muted);
-    }
-
-    .hr{
-      height: 1px;
-      background: rgba(0,0,0,.10);
-      margin: 12px 0;
-    }
-
-    .twoCol{
+    .formGrid{
+      margin-top:12px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
+      gap:10px;
     }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
+    .field label{
+      display:block;
+      font-size:var(--tiny);
+      color:var(--muted);
+      margin:0 0 6px;
     }
-
-    .label{
-      font-size: var(--tiny);
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    input[type="number"], input[type="text"]{
+    .input{
       width:100%;
-      border-radius: 14px;
-      border: 1px solid rgba(0,0,0,.14);
-      background: rgba(255,255,255,.75);
-      padding: 10px 12px;
-      font-size: var(--small);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:13.5px;
+      background:rgba(255,255,255,.92);
       outline:none;
     }
-
-    .row{
+    .hint{
+      margin-top:8px;
+      font-size:var(--tiny);
+      color:var(--muted);
       display:flex;
-      align-items:center;
       justify-content:space-between;
       gap:10px;
-      flex-wrap: wrap;
+      border-top:1px dashed rgba(0,0,0,.14);
+      padding-top:8px;
     }
 
-    .badge{
-      font-size: var(--tiny);
-      border-radius: var(--pill);
-      padding: 6px 10px;
-      border: 1px solid rgba(0,0,0,.12);
-      background: rgba(255,255,255,.65);
-      color: var(--muted);
-      white-space: nowrap;
+    /* Tiles */
+    .tiles{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
     }
-    .badge.good{
-      background: rgba(47,109,85,.12);
-      border-color: rgba(47,109,85,.25);
-      color: var(--olive);
-      font-weight: 800;
-    }
-    .badge.gold{
-      background: rgba(177,139,61,.14);
-      border-color: rgba(177,139,61,.28);
-      color: var(--gold);
-      font-weight: 800;
+    @media (max-width: 520px){
+      .tiles{grid-template-columns:1fr 1fr}
     }
 
-    .progress{
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.08);
+    .tile{
+      position:relative;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      background:
+        radial-gradient(260px 140px at 85% 25%, rgba(47,107,87,.12), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.70));
+      cursor:pointer;
+      user-select:none;
+      transition:transform .12s ease;
       overflow:hidden;
-      border: 1px solid rgba(0,0,0,.10);
+      min-height:78px;
     }
-    .progress > div{
-      height: 100%;
-      width: 45%;
-      background: linear-gradient(90deg, rgba(177,139,61,.90), rgba(47,109,85,.80));
-      border-radius: 999px;
+    .tile:hover{transform:translateY(-1px)}
+    .tile .tTitle{margin:0; font-weight:900; font-size:13.5px; letter-spacing:.1px}
+    .tile .tSub{margin:6px 0 0; color:var(--muted); font-size:var(--tiny)}
+    .chipRow{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .chip{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:var(--tiny);
+      color:var(--muted);
+      background:rgba(255,255,255,.82);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
     }
 
+    /* Generic list cards */
     .list{
       display:flex;
       flex-direction:column;
-      gap: 10px;
-      margin-top: 10px;
+      gap:10px;
+      margin-top:12px;
     }
 
     .item{
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(0,0,0,.12);
-      padding: 12px;
-      box-shadow: 0 6px 14px rgba(0,0,0,.05);
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.82);
+      padding:12px;
+      position:relative;
+      overflow:hidden;
     }
-
-    .itemTop{
+    .itemHead{
       display:flex;
-      align-items:flex-start;
       justify-content:space-between;
-      gap: 10px;
+      align-items:flex-start;
+      gap:10px;
     }
-
     .itemTitle{
       margin:0;
-      font-weight: 900;
-      font-size: 15px;
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.1px;
     }
-
-    .itemDesc{
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: var(--small);
-      line-height: 1.55;
+    .itemTag{
+      border:1px solid rgba(0,0,0,.12);
+      background:rgba(0,0,0,.04);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:var(--tiny);
+      color:var(--muted);
+      white-space:nowrap;
     }
-
-    .meta{
+    .itemBody{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:var(--small);
+    }
+    .metaRow{
       display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:10px;
     }
-
     .actions{
+      margin-top:10px;
       display:flex;
-      gap: 8px;
-      margin-top: 12px;
-      flex-wrap: wrap;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .footerNote{
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: var(--tiny);
-      line-height: 1.6;
-    }
-
-    /* bottom nav (mobile-first, keeps UX simple) */
+    /* Bottom nav (mobile) */
     .bottomNav{
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(243,239,231,.88);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(0,0,0,.10);
-      z-index: 50;
-    }
-
-    .navInner{
-      max-width: 980px;
-      margin: 0 auto;
+      position:fixed;
+      left:0; right:0;
+      bottom:0;
+      padding:12px 14px calc(12px + env(safe-area-inset-bottom));
       display:flex;
-      justify-content:space-between;
-      gap: 8px;
+      justify-content:center;
+      pointer-events:none;
+      z-index:50;
     }
 
-    .navBtn{
-      flex: 1 1 0;
-      border-radius: 14px;
-      border: 1px solid rgba(0,0,0,.12);
-      background: rgba(255,255,255,.62);
-      padding: 10px 8px;
-      font-size: var(--tiny);
+    .bottomBar{
+      pointer-events:auto;
+      width:min(760px, 100%);
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:999px;
+      background:rgba(255,255,255,.85);
+      box-shadow:0 18px 44px rgba(0,0,0,.14);
+      display:flex;
+      gap:6px;
+      padding:6px;
+      backdrop-filter: blur(10px) saturate(1.2);
+      overflow:hidden;
+    }
+    .tabBtn{
+      flex:1 1 0;
+      border:0;
+      border-radius:999px;
+      padding:10px 10px;
+      font-size:var(--tiny);
+      color:var(--muted);
+      background:transparent;
       cursor:pointer;
-      text-align:center;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
       user-select:none;
-      white-space: nowrap;
+      min-width:0;
     }
-    .navBtn.active{
-      background: var(--btn);
-      color: var(--btnText);
-      border-color: rgba(0,0,0,.18);
-      font-weight: 800;
+    .tabBtn.active{
+      background:var(--btn);
+      color:var(--btnText);
     }
+    .ico{width:16px;height:16px;display:inline-block}
+    .ico svg{width:16px;height:16px;display:block}
 
-    /* responsive */
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
-      .title{ font-size: 34px; }
-    }
+    /* Page visibility */
+    .page{display:none}
+    .page.active{display:block}
+
+    /* RTL tweaks */
+    [dir="rtl"] body{font-family:"Tahoma", system-ui, -apple-system, Segoe UI, Roboto, Arial}
+    [dir="rtl"] .heroNote, [dir="rtl"] .cardDesc, [dir="rtl"] .itemBody {letter-spacing:0}
+    [dir="rtl"] .langBox{flex-direction:row-reverse}
+    [dir="rtl"] .badgeCol{align-items:flex-start}
+    [dir="rtl"] .snapshot{grid-template-columns:auto 1fr}
+    [dir="rtl"] .profile{flex-direction:row-reverse}
+    [dir="rtl"] .itemHead{flex-direction:row-reverse}
+    [dir="rtl"] .actions{justify-content:flex-start}
+    [dir="rtl"] .metaRow{justify-content:flex-start}
+    [dir="rtl"] .actionRow{grid-template-columns:auto 1fr}
+    [dir="rtl"] .formGrid{direction:rtl}
+    [dir="rtl"] .field label{text-align:right}
+    [dir="rtl"] .input{text-align:right}
+    [dir="rtl"] .progressMeta{direction:rtl}
+
+    /* Small screens header sizing */
     @media (max-width: 520px){
-      .wrap{ padding: 12px 10px 92px; }
-      .header{ padding: 14px 14px 12px; }
-      .content{ padding: 14px; }
-      .title{ font-size: 36px; }
-      .subtitle{ font-size: 12px; }
-      .tab{ padding: 9px 12px; }
-      .card{ padding: 13px; }
-      .cardTitle{ font-size: 18px; }
-    }
-
-    /* RTL adjustments */
-    html[dir="rtl"] .brandRow{ direction: rtl; }
-    html[dir="rtl"] .tabs{ direction: rtl; }
-    html[dir="rtl"] .navInner{ direction: rtl; }
-    html[dir="rtl"] .row{ direction: rtl; }
-    html[dir="rtl"] .itemTop{ direction: rtl; }
-
-    /* small helper */
-    .muted{ color: var(--muted); }
-    .kpi{
-      font-size: 40px;
-      line-height: 1;
-      font-weight: 900;
-      letter-spacing: .2px;
+      :root{--h1:30px}
+      .hero{padding:14px 14px 12px}
+      .brandTitle{font-size:var(--h1)}
+      .navPills{gap:6px}
+      .navPills .navBtn{padding:8px 10px}
+      .tiles{gap:8px}
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="paper" id="app">
-      <div class="header">
-        <div class="brandRow">
-          <div class="brand">
-            <div class="mark" aria-hidden="true"><span>PS</span></div>
-            <div class="brandText">
-              <h1 class="title" data-i18n="brandTitle">Peace Soldiers</h1>
-              <div class="subtitle" data-i18n="brandSubtitle">Official Peace Pass</div>
-            </div>
+  <div class="app">
+    <div class="shell">
+
+      <header class="hero" id="hero">
+        <div class="paper-lines" aria-hidden="true"></div>
+
+        <div class="brand">
+          <div class="titleWrap">
+            <div class="brandTitle" id="brandTitle">Peace Soldiers</div>
+            <div class="brandSub" id="brandSub">Official Peace Pass</div>
           </div>
 
           <div class="langBox">
-            <div class="langPills" aria-label="Language">
-              <button class="langBtn" id="btnEN" type="button">EN</button>
-              <button class="langBtn" id="btnFA" type="button">FA</button>
+            <div class="pill" id="contextPill" title="Runtime">
+              <span id="ctxDot" style="width:8px;height:8px;border-radius:999px;background:rgba(47,107,87,.65);display:inline-block"></span>
+              <span id="ctxText">MVP</span>
+            </div>
+
+            <div class="seg" aria-label="Language">
+              <button id="btnEN" type="button">EN</button>
+              <button id="btnFA" type="button">FA</button>
             </div>
           </div>
         </div>
 
-        <div class="tabs" id="tabs"></div>
+        <nav class="navPills" id="topNav" aria-label="Navigation">
+          <!-- filled by JS -->
+        </nav>
 
-        <div class="lead" data-i18n="headerLead">
-          Peace Pass is the digital identity layer of Peace Soldiers: access to missions, HII scoring, airdrops, and the Peace Store (current build focuses on the MVP flow).
+        <div class="heroNote" id="heroNote">
+          Peace Pass is the identity layer for missions access, HII scoring, airdrops, and the Peace Store.
         </div>
-      </div>
+      </header>
 
-      <div class="content" id="content"></div>
+      <main class="grid">
+        <!-- Left column -->
+        <section class="card">
+          <div class="paper-lines" aria-hidden="true"></div>
+          <div class="cardInner">
+
+            <!-- HOME -->
+            <div class="page active" id="page-home">
+              <h2 class="cardTitle" id="homeTitle">Quick Summary</h2>
+              <p class="cardDesc" id="homeDesc">
+                Your start point: a clear snapshot of your pass, the next best action, and direct paths to Missions, Airdrop, and the Store.
+              </p>
+
+              <div class="actionRow" style="margin-top:14px">
+                <div>
+                  <p class="actionTitle" id="nextActionTitle">50 $PEACE → 39.00 USDT</p>
+                  <p class="actionSub" id="nextActionSub">Preview only. Wallet and payments will be added in later phases.</p>
+                </div>
+                <button class="btn gold" type="button" id="btnConvertGo">Convert</button>
+              </div>
+
+              <div class="tiles">
+                <div class="tile" role="button" tabindex="0" data-go="#missions">
+                  <p class="tTitle" id="tileMissionsTitle">Missions</p>
+                  <p class="tSub" id="tileMissionsSub">3 active</p>
+                </div>
+                <div class="tile" role="button" tabindex="0" data-go="#airdrop">
+                  <p class="tTitle" id="tileAirdropTitle">Airdrop</p>
+                  <p class="tSub" id="tileAirdropSub">Eligibility check</p>
+                </div>
+                <div class="tile" role="button" tabindex="0" data-go="#store">
+                  <p class="tTitle" id="tileStoreTitle">Peace Store</p>
+                  <p class="tSub" id="tileStoreSub">2 offers</p>
+                </div>
+              </div>
+
+              <div class="chipRow">
+                <span class="chip" id="chipHii">HII: <b id="chipHiiVal">694</b></span>
+                <span class="chip" id="chipLevel">Level: <b id="chipLevelVal">ACTIVE</b></span>
+                <span class="chip" id="chipMember">Member since: <b id="chipMemberVal">2025</b></span>
+              </div>
+            </div>
+
+            <!-- PASS -->
+            <div class="page" id="page-pass">
+              <h2 class="cardTitle" id="passTitle">Peace Pass</h2>
+              <p class="cardDesc" id="passDesc">
+                A calm, official credential designed for real participation. Your pass connects identity, mission activity, and verified impact.
+              </p>
+
+              <div class="list">
+                <div class="item">
+                  <div class="itemHead">
+                    <div style="min-width:0">
+                      <p class="itemTitle" id="passCardTitle">Peace Pass Snapshot</p>
+                      <div class="profile" style="margin-top:10px">
+                        <div class="avatar" id="avatar2">P</div>
+                        <div class="pmeta">
+                          <p class="pname" id="fullName2">Pouyan Koohi</p>
+                          <p class="pid"><span id="pidLabel2">Peace ID:</span> <b id="peaceId2">PS-0108293334</b></p>
+                        </div>
+                      </div>
+                    </div>
+                    <span class="itemTag" id="passTag">MVP</span>
+                  </div>
+
+                  <div class="hiiBox">
+                    <div>
+                      <p class="hiiLabel" id="hiiLabel2">Human Impact Index (HII)</p>
+                      <p class="hiiValue" id="hii2">694</p>
+                    </div>
+                    <div class="levelBadge" id="levelBadge2">
+                      <span id="levelDot2" style="width:7px;height:7px;border-radius:999px;background:rgba(47,107,87,.8);display:inline-block"></span>
+                      <span id="level2">ACTIVE</span>
+                    </div>
+                  </div>
+
+                  <div class="progressWrap" aria-label="Progress">
+                    <div class="progressBar" id="progressBar2" style="width:46%"></div>
+                  </div>
+                  <div class="progressMeta">
+                    <span id="progressLeft2">Progress to next level</span>
+                    <span><b id="progressPct2">46%</b></span>
+                  </div>
+
+                  <div class="itemBody" id="passBody">
+                    <ul style="margin:10px 0 0; padding-inline-start:18px">
+                      <li id="passLi1">A single identity reference for the ecosystem (Peace ID).</li>
+                      <li id="passLi2">Access to missions with clear scope, points, and review rules.</li>
+                      <li id="passLi3">Impact scoring (HII) that grows with verified participation.</li>
+                      <li id="passLi4">A path to rewards, governance access, and partner benefits as phases unlock.</li>
+                    </ul>
+                    <div style="margin-top:12px; border-top:1px solid var(--line); padding-top:10px; display:flex; gap:10px; flex-wrap:wrap">
+                      <button class="btn olive" type="button" id="btnJoinPass">Get Your Pass</button>
+                      <button class="btn secondary" type="button" data-go="#docs" id="btnPassDocs">View Documentation</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="whyTitle">Why it matters</p>
+                    <span class="itemTag" id="whyTag">Trust</span>
+                  </div>
+                  <div class="itemBody" id="whyBody">
+                    Peace Pass is designed to feel official and stable. The goal is simple: make participation measurable, auditable, and rewarding, without turning impact into noise.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MISSIONS -->
+            <div class="page" id="page-missions">
+              <h2 class="cardTitle" id="missionsTitle">Missions</h2>
+              <p class="cardDesc" id="missionsDesc">
+                Missions are the path to real participation. Each mission has a clear scope, points, and impact reflected in your HII after completion.
+              </p>
+
+              <div class="list" id="missionsList"></div>
+            </div>
+
+            <!-- AIRDROP -->
+            <div class="page" id="page-airdrop">
+              <h2 class="cardTitle" id="airdropTitle">Airdrop</h2>
+              <p class="cardDesc" id="airdropDesc">
+                Eligibility and distribution rules will be published transparently. For now, this is a preview of the flow.
+              </p>
+
+              <div class="list">
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="airdropCheckTitle">Eligibility Check</p>
+                    <span class="itemTag" id="airdropTag">Preview</span>
+                  </div>
+                  <div class="itemBody" id="airdropBody">
+                    Connect a wallet later to check eligibility. The final rules will reference participation signals (missions, pass status) and published snapshots.
+                  </div>
+                  <div class="actions">
+                    <button class="btn" type="button" id="btnAirdropCheck">Check (Demo)</button>
+                    <button class="btn secondary" type="button" data-go="#news" id="btnAirdropNews">See Updates</button>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="airdropNotesTitle">Notes</p>
+                    <span class="itemTag" id="airdropNotesTag">Fairness</span>
+                  </div>
+                  <div class="itemBody" id="airdropNotesBody">
+                    The airdrop is meant to reward early contribution and verified participation. Details will be posted before any claim window opens.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STORE -->
+            <div class="page" id="page-store">
+              <h2 class="cardTitle" id="storeTitle">Peace Store</h2>
+              <p class="cardDesc" id="storeDesc">
+                A calm, mission-aligned store. Offers focus on practical value, partner discounts, and donation-linked items.
+              </p>
+
+              <div class="list" id="storeList"></div>
+            </div>
+
+            <!-- NEWS -->
+            <div class="page" id="page-news">
+              <h2 class="cardTitle" id="newsTitle">News & Newsletter</h2>
+              <p class="cardDesc" id="newsDesc">
+                Project updates and NGO field notes in one place. Clear, time-stamped, and easy to share.
+              </p>
+
+              <div class="list" id="newsList"></div>
+
+              <div class="item" style="margin-top:10px">
+                <div class="itemHead">
+                  <p class="itemTitle" id="newsletterTitle">Newsletter</p>
+                  <span class="itemTag" id="newsletterTag">Monthly</span>
+                </div>
+                <div class="itemBody" id="newsletterBody">
+                  Subscribe to receive a short monthly digest: missions launched, partner highlights, and progress notes.
+                </div>
+
+                <div class="formGrid" style="margin-top:12px">
+                  <div class="field">
+                    <label for="newsEmail" id="emailLabel">Email</label>
+                    <input class="input" id="newsEmail" placeholder="name@example.com" inputmode="email" />
+                  </div>
+                  <div class="field">
+                    <label for="newsName" id="nameLabel">Name</label>
+                    <input class="input" id="newsName" placeholder="Your name" />
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <button class="btn olive" type="button" id="btnSubscribe">Subscribe</button>
+                  <button class="btn secondary" type="button" id="btnCopyUpdates">Copy updates link</button>
+                </div>
+                <div class="hint" id="newsletterHint">
+                  <span id="newsletterHintLeft">No spam. Unsubscribe anytime.</span>
+                  <span id="newsletterHintRight">Preview form</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- PARTNERS -->
+            <div class="page" id="page-partners">
+              <h2 class="cardTitle" id="partnersTitle">Peace Partners</h2>
+              <p class="cardDesc" id="partnersDesc">
+                NGOs, companies, and individuals who support missions, verification, logistics, and community programs.
+              </p>
+
+              <div class="list" id="partnersList"></div>
+
+              <div class="item">
+                <div class="itemHead">
+                  <p class="itemTitle" id="partnersJoinTitle">Become a partner</p>
+                  <span class="itemTag" id="partnersJoinTag">Open</span>
+                </div>
+                <div class="itemBody" id="partnersJoinBody">
+                  If you run an NGO or represent a company interested in verified impact programs, we can align on mission scope, reporting format, and a transparent public log.
+                </div>
+                <div class="actions">
+                  <button class="btn" type="button" id="btnPartnerContact">Contact (Demo)</button>
+                  <button class="btn secondary" type="button" data-go="#docs" id="btnPartnerDocs">Read docs</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TOKEN -->
+            <div class="page" id="page-token">
+              <h2 class="cardTitle" id="tokenTitle">Peace Token</h2>
+              <p class="cardDesc" id="tokenDesc">
+                A utility token designed to support participation, incentives, and transparent funding flows.
+              </p>
+
+              <div class="list">
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="tgeTitle">TGE</p>
+                    <span class="itemTag" id="tgeTag">Roadmap</span>
+                  </div>
+                  <div class="itemBody" id="tgeBody">
+                    The Token Generation Event (TGE) details and timeline will be published in the tokenomics pack with clear terms, unlocks, and disclosures.
+                  </div>
+                  <div class="actions">
+                    <button class="btn gold" type="button" data-go="#docs" id="btnTokenDocs">Open Tokenomics</button>
+                    <button class="btn secondary" type="button" data-go="#home" id="btnTokenBack">Back to Home</button>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="tokenUseTitle">What $PEACE is used for</p>
+                    <span class="itemTag" id="tokenUseTag">Utility</span>
+                  </div>
+                  <div class="itemBody" id="tokenUseBody">
+                    $PEACE is built around participation loops: missions, rewards, partner programs, and long-term sustainability. The goal is to keep incentives understandable and publicly auditable.
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="convertTitle">Convert (Preview)</p>
+                    <span class="itemTag" id="convertTag">UI</span>
+                  </div>
+
+                  <div class="actionRow" style="margin-top:10px">
+                    <div>
+                      <p class="actionTitle" id="convertHeadline">50 $PEACE → 39.00 USDT</p>
+                      <p class="actionSub" id="convertSub">This is a preview of the UX. Later phases connect to wallet and pricing sources.</p>
+                    </div>
+                    <button class="btn" type="button" id="btnConvertNow">Convert</button>
+                  </div>
+
+                  <div class="formGrid">
+                    <div class="field">
+                      <label id="peaceAmountLabel" for="peaceAmount">$PEACE amount</label>
+                      <input id="peaceAmount" class="input" type="number" min="0" step="0.01" value="50" />
+                    </div>
+                    <div class="field">
+                      <label id="usdtEstLabel" for="usdtEstimate">Estimated USDT</label>
+                      <input id="usdtEstimate" class="input" type="text" value="39.00" readonly />
+                    </div>
+                  </div>
+
+                  <div class="hint">
+                    <span id="rateLabel">Sample rate:</span>
+                    <span><b id="rateVal">0.78</b></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- NFT -->
+            <div class="page" id="page-nft">
+              <h2 class="cardTitle" id="nftTitle">Peace Army NFT Collection</h2>
+              <p class="cardDesc" id="nftDesc">
+                A collection designed to support community identity, early participation, and long-term engagement.
+              </p>
+
+              <div class="list">
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="nftBlockTitle">Collection overview</p>
+                    <span class="itemTag" id="nftTag">Preview</span>
+                  </div>
+                  <div class="itemBody" id="nftBody">
+                    The collection is a companion layer to the Peace Pass. Details, supply, and utility are documented with clear rules and disclosure.
+                  </div>
+                  <div class="actions">
+                    <button class="btn gold" type="button" id="btnNftOpen">Open page (Demo)</button>
+                    <button class="btn secondary" type="button" data-go="#docs" id="btnNftDocs">Read docs</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DOCS -->
+            <div class="page" id="page-docs">
+              <h2 class="cardTitle" id="docsTitle">Documentation</h2>
+              <p class="cardDesc" id="docsDesc">
+                Official documents and repository links. Files open from the /docs folder.
+              </p>
+
+              <div class="list">
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="repoTitle">GitHub Repository</p>
+                    <span class="itemTag">GitHub</span>
+                  </div>
+                  <div class="itemBody" id="repoBody">Code and project history.</div>
+                  <div class="actions">
+                    <button class="btn" type="button" id="btnRepoOpen">Open</button>
+                    <button class="btn secondary" type="button" id="btnRepoCopy">Copy link</button>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="filesTitle">Files</p>
+                    <span class="itemTag" id="filesTag">PDF</span>
+                  </div>
+                  <div class="itemBody" id="filesBody">
+                    Open or download files. If you renamed anything, update the filenames here to match.
+                  </div>
+                  <div class="list" id="docsList"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="page" id="page-about">
+              <h2 class="cardTitle" id="aboutTitle">About</h2>
+              <p class="cardDesc" id="aboutDesc">
+                Peace Soldiers is building a human-centered network where real missions connect to transparent funding and measurable outcomes.
+              </p>
+
+              <div class="list">
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="aboutBlock1Title">What we do</p>
+                    <span class="itemTag" id="aboutTag1">MVP</span>
+                  </div>
+                  <div class="itemBody" id="aboutBlock1Body">
+                    We start with a simple core: Peace Pass (identity), missions (action), and a clear impact signal (HII). The MVP focuses on a clean flow inside Telegram, with documents and progress updates accessible from day one.
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="aboutBlock2Title">How trust is built</p>
+                    <span class="itemTag" id="aboutTag2">Verification</span>
+                  </div>
+                  <div class="itemBody" id="aboutBlock2Body">
+                    Missions are designed with scope, points, and review rules. Partner organizations can validate field activity, and reports can be logged in a consistent format. The goal is to keep impact auditable and useful, not performative.
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="itemHead">
+                    <p class="itemTitle" id="aboutBlock3Title">What happens next</p>
+                    <span class="itemTag" id="aboutTag3">Phases</span>
+                  </div>
+                  <div class="itemBody" id="aboutBlock3Body">
+                    Later phases add wallet, rewards, governance access, and partner benefits. Each step ships with public documentation and clear constraints. Progress is shared through the News page and the monthly newsletter.
+                  </div>
+                  <div class="actions">
+                    <button class="btn olive" type="button" data-go="#news" id="btnAboutNews">Read updates</button>
+                    <button class="btn secondary" type="button" data-go="#docs" id="btnAboutDocs">Open documents</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Right column: snapshot widget stays visible on desktop -->
+        <aside class="card">
+          <div class="paper-lines" aria-hidden="true"></div>
+          <div class="cardInner">
+            <h2 class="cardTitle" id="rightTitle">Peace Pass (MVP)</h2>
+            <p class="cardDesc" id="rightDesc">
+              In the final version, profile photo, member since, and real HII/level come from backend/on-chain sources.
+            </p>
+
+            <div class="item" style="margin-top:12px">
+              <div class="snapshot">
+                <div>
+                  <div class="profile">
+                    <div class="avatar" id="avatar">P</div>
+                    <div class="pmeta">
+                      <p class="pname" id="fullName">Pouyan Koohi</p>
+                      <p class="pid"><span id="pidLabel">Peace ID:</span> <b id="peaceId">PS-0108293334</b></p>
+                    </div>
+                  </div>
+
+                  <div class="progressWrap" style="margin-top:12px">
+                    <div class="progressBar" id="progressBar" style="width:46%"></div>
+                  </div>
+                  <div class="progressMeta">
+                    <span id="progressLeft">Progress</span>
+                    <span><b id="progressPct">46%</b></span>
+                  </div>
+
+                  <div class="hiiBox">
+                    <div>
+                      <p class="hiiLabel" id="hiiLabel">HII</p>
+                      <p class="hiiValue" id="hii">694</p>
+                    </div>
+                    <div class="levelBadge">
+                      <span style="width:7px;height:7px;border-radius:999px;background:rgba(47,107,87,.8);display:inline-block"></span>
+                      <span id="level">ACTIVE</span>
+                    </div>
+                  </div>
+
+                  <div class="actions" style="margin-top:12px">
+                    <button class="btn olive" type="button" data-go="#pass" id="btnViewPass">View Pass</button>
+                    <button class="btn secondary" type="button" data-go="#missions" id="btnViewMissions">Missions</button>
+                  </div>
+                </div>
+
+                <div class="badgeCol">
+                  <span class="itemTag" id="runtimeTag">Telegram</span>
+                  <span class="itemTag" id="verTag">v1</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </aside>
+      </main>
+
     </div>
   </div>
 
-  <div class="bottomNav" role="navigation" aria-label="Bottom navigation">
-    <div class="navInner" id="bottomNav"></div>
+  <!-- Bottom nav -->
+  <div class="bottomNav" aria-label="Bottom navigation">
+    <div class="bottomBar" id="bottomBar">
+      <button class="tabBtn active" data-go="#home" type="button">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.8 12 4l8 6.8V20a1 1 0 0 1-1 1h-5.5v-6.2h-3V21H5a1 1 0 0 1-1-1v-9.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </span>
+        <span id="tabHome">Home</span>
+      </button>
+
+      <button class="tabBtn" data-go="#pass" type="button">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6.5 6.8A3.3 3.3 0 0 1 9.8 3.5h8.7a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H9.8A3.3 3.3 0 0 1 6.5 17.2V6.8Z" stroke="currentColor" stroke-width="1.6"/><path d="M6.7 7.4h11.4" stroke="currentColor" stroke-width="1.6" opacity=".8"/></svg>
+        </span>
+        <span id="tabPass">Pass</span>
+      </button>
+
+      <button class="tabBtn" data-go="#missions" type="button">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 7h10M7 12h10M7 17h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <span id="tabMissions">Missions</span>
+      </button>
+
+      <button class="tabBtn" data-go="#store" type="button">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 9V7a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.6"/><path d="M6.5 9h11l-.9 12a1.6 1.6 0 0 1-1.6 1.5H9a1.6 1.6 0 0 1-1.6-1.5L6.5 9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </span>
+        <span id="tabStore">Store</span>
+      </button>
+
+      <button class="tabBtn" data-go="#news" type="button">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 4h10v16H7" stroke="currentColor" stroke-width="1.6"/><path d="M7 8H5a1 1 0 0 0-1 1v9a2 2 0 0 0 2 2h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9 8h6M9 12h6M9 16h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".85"/></svg>
+        </span>
+        <span id="tabNews">News</span>
+      </button>
+    </div>
   </div>
 
   <script>
     (function(){
       const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-      if (tg) {
-        try { tg.ready(); } catch(e){}
-        try { tg.expand(); } catch(e){}
-      }
 
-      const state = {
-        lang: "en",
-        route: "home",
-        user: {
-          first_name: "Guest",
-          last_name: "",
-          username: "guest",
-          id: 12345678,
-          language_code: "en"
-        },
-        profile: {
-          fullName: "Pouyan Koohi",
-          peaceId: "PS-0108293334",
-          level: "ACTIVE",
-          hii: 694,
-          progress: 45
-        },
-        rate: 0.78
-      };
-
-      // --- i18n ---
-      const I18N = {
-        en: {
-          brandTitle: "Peace Soldiers",
-          brandSubtitle: "Official Peace Pass",
-          headerLead: "Peace Pass is the digital identity layer of Peace Soldiers: access to missions, HII scoring, airdrops, and the Peace Store (current build focuses on the MVP flow).",
-
-          tab_home: "Home",
-          tab_pass: "Peace Pass",
-          tab_missions: "Missions",
-          tab_airdrop: "Airdrop",
-          tab_store: "Peace Store",
-          tab_news: "News",
-          tab_about: "About",
-          tab_partners: "Partners",
-          tab_docs: "Documentation",
-          tab_token: "Token",
-          tab_nft: "Peace Army NFT",
-
-          nav_home: "Home",
-          nav_pass: "Pass",
-          nav_missions: "Missions",
-          nav_store: "Store",
-          nav_news: "News",
-
-          home_quick: "Quick Summary",
-          home_quick_p: "Start here: a clear snapshot of the pass, the next best action, and direct paths to Missions, Airdrop, and the Store. Later phases connect on-chain data and partner verification for field impact.",
-          home_next: "Next Best Action",
-          home_convert_title: "Convert $PEACE → USDT",
-          home_convert_sub: "Preview only. Wallet, swaps, and payments are added in later phases.",
-          home_amount: "$PEACE amount",
-          home_est: "Estimated USDT",
-          home_rate: "Sample rate",
-          home_fee: "Network / service fee",
-          home_btn_convert: "Convert Tokens",
-          home_links: "Explore",
-
-          pass_title: "Peace Pass Snapshot",
-          pass_pitch: "Your Peace Pass is a portable identity for missions, rewards, and future governance. It turns participation into a clear score and unlocks access across the ecosystem.",
-          pass_benefits: "What it unlocks",
-          pass_b1: "Verified missions and progress tracking",
-          pass_b2: "Airdrop eligibility and reward distribution",
-          pass_b3: "Store access and reputation-based perks",
-          pass_b4: "DAO participation (later phase)",
-          pass_cta: "Get Peace Pass (Demo)",
-          pass_how: "How it works",
-          pass_how_p: "Complete missions → earn points and HII → level up → unlock access and rewards. Field missions can be verified via partners in later phases.",
-
-          missions_title: "Missions",
-          missions_lead: "Missions are the path to real participation. Each mission has clear scope, points, and impact reflected in HII after completion.",
-          missions_join: "Join",
-          missions_details: "Details",
-          missions_close: "Close",
-
-          airdrop_title: "Airdrop",
-          airdrop_lead: "Airdrops reward verified participation. This MVP shows the flow and criteria structure (not a live distribution).",
-          airdrop_elig: "Eligibility (demo)",
-          airdrop_rule1: "Hold an active Peace Pass",
-          airdrop_rule2: "Complete at least 2 missions",
-          airdrop_rule3: "Keep a minimum HII score",
-          airdrop_note: "Distribution logic and wallets are added later.",
-
-          store_title: "Peace Store",
-          store_lead: "A simple access layer for perks and offers. In the MVP, items are sample-only.",
-          store_buy: "View item",
-
-          news_title: "News & NGO Updates",
-          news_lead: "Short updates from the project and partner NGOs. This page is intentionally lightweight and readable.",
-
-          about_title: "About Peace Soldiers",
-          about_lead: "Peace Soldiers connects real-world missions to a transparent participation economy. It is built to be human-first, measurable, and hard to fake.",
-          about_body: "We focus on practical actions, clear verification paths, and a long-term structure that can scale responsibly. The Peace Pass is the entry point: identity, access, and a consistent way to measure contribution through HII (Human Impact Index). The MVP demonstrates the user flow and information architecture. Later phases add wallet, payments, verification partners, and governance.",
-
-          partners_title: "Peace Partners",
-          partners_lead: "A space for NGOs, companies, and individuals who want to collaborate on missions, verification, logistics, or support.",
-          partners_ngos: "NGOs",
-          partners_companies: "Companies",
-          partners_people: "Individuals",
-          partners_cta: "Apply to collaborate (Demo)",
-
-          docs_title: "Documentation",
-          docs_lead: "Project documents and repository links. Files open in a new tab.",
-          docs_repo: "GitHub Repository",
-          docs_whitepaper: "Whitepaper",
-          docs_tokenomics: "Tokenomics",
-          docs_business: "Business Plan",
-          docs_exec: "Executive Summary",
-          docs_dao: "DAO Report",
-
-          token_title: "Peace Token",
-          token_lead: "A clear overview of the token, TGE, and the logic behind distribution. The full details live in Tokenomics.",
-          token_tge: "TGE",
-          token_tge_p: "TGE timing and final parameters will be published with the launch pack. This MVP page shows the structure and the narrative, not final numbers.",
-          token_why: "Why it exists",
-          token_why_p: "To support participation, reward verified impact, and align long-term incentives across missions, partners, and the treasury.",
-          token_read: "Read Tokenomics (PDF)",
-
-          nft_title: "Peace Army NFT Collection",
-          nft_lead: "A membership layer designed for identity, early support, and long-term perks. This MVP page is a placeholder for collection launch details.",
-          nft_cta: "Collection link (Demo)",
-
-          misc_points: "Points",
-          misc_deadline: "Deadline",
-          misc_hii: "HII",
-          misc_id: "ID",
-          misc_status: "Status",
-          misc_active: "Active"
-        },
-
-        fa: {
-          brandTitle: "سربازان صلح",
-          brandSubtitle: "پاسپورت رسمی صلح",
-          headerLead: "Peace Pass لایه هویت دیجیتال «سربازان صلح» است: دسترسی به ماموریت‌ها، امتیازدهی HII، ایردراپ‌ها و فروشگاه صلح (نسخه فعلی روی جریان MVP تمرکز دارد).",
-
-          tab_home: "خانه",
-          tab_pass: "پاسپورت صلح",
-          tab_missions: "ماموریت‌ها",
-          tab_airdrop: "ایردراپ",
-          tab_store: "فروشگاه صلح",
-          tab_news: "خبرها",
-          tab_about: "درباره ما",
-          tab_partners: "همکاران صلح",
-          tab_docs: "مستندات",
-          tab_token: "توکن صلح",
-          tab_nft: "کالکشن NFT ارتش صلح",
-
-          nav_home: "خانه",
-          nav_pass: "پاسپورت",
-          nav_missions: "ماموریت‌ها",
-          nav_store: "فروشگاه",
-          nav_news: "خبرها",
-
-          home_quick: "خلاصه سریع",
-          home_quick_p: "نقطه شروع کاربر: یک نمای سریع از پاسپورت، اقدام پیشنهادی بعدی، و مسیرهای مستقیم به ماموریت‌ها، ایردراپ و فروشگاه. در فازهای بعدی، داده‌های واقعی از منابع بک‌اند/آن‌چین و تایید همکاران برای ماموریت‌های میدانی اضافه می‌شود.",
-          home_next: "اقدام پیشنهادی بعدی",
-          home_convert_title: "تبدیل $PEACE → USDT",
-          home_convert_sub: "فقط پیش‌نمایش. کیف‌پول، سواپ و پرداخت‌ها در فازهای بعدی اضافه می‌شوند.",
-          home_amount: "مقدار $PEACE",
-          home_est: "USDT تخمینی",
-          home_rate: "نرخ نمونه",
-          home_fee: "کارمزد شبکه / سرویس",
-          home_btn_convert: "تبدیل توکن‌ها",
-          home_links: "دسترسی سریع",
-
-          pass_title: "نمای پاسپورت صلح",
-          pass_pitch: "Peace Pass یک هویت قابل‌حمل برای ماموریت‌ها، پاداش‌ها و حکمرانی آینده است. مشارکت را به یک امتیاز قابل فهم تبدیل می‌کند و دسترسی‌ها را در سراسر اکوسیستم باز می‌کند.",
-          pass_benefits: "چه چیزی را باز می‌کند",
-          pass_b1: "ماموریت‌های تاییدپذیر و پیگیری پیشرفت",
-          pass_b2: "شرایط ایردراپ و توزیع پاداش",
-          pass_b3: "دسترسی به فروشگاه و مزایای سطح‌بندی",
-          pass_b4: "مشارکت DAO (در فاز بعد)",
-          pass_cta: "دریافت Peace Pass (دمو)",
-          pass_how: "چطور کار می‌کند",
-          pass_how_p: "ماموریت انجام بده → امتیاز و HII بگیر → سطح بالاتر برو → دسترسی و پاداش باز کن. ماموریت‌های میدانی در فازهای بعد با همکاران قابل تایید می‌شوند.",
-
-          missions_title: "ماموریت‌ها",
-          missions_lead: "ماموریت‌ها مسیر مشارکت واقعی هستند. هر ماموریت دامنه مشخص، امتیاز و اثر دارد و پس از تکمیل در HII منعکس می‌شود.",
-          missions_join: "شروع",
-          missions_details: "جزئیات",
-          missions_close: "بستن",
-
-          airdrop_title: "ایردراپ",
-          airdrop_lead: "ایردراپ‌ها برای پاداش دادن به مشارکت تاییدشده طراحی می‌شوند. این MVP صرفاً ساختار جریان و معیارها را نشان می‌دهد (نه توزیع واقعی).",
-          airdrop_elig: "شرایط (دمو)",
-          airdrop_rule1: "Peace Pass فعال داشته باش",
-          airdrop_rule2: "حداقل ۲ ماموریت کامل کن",
-          airdrop_rule3: "حداقل امتیاز HII را حفظ کن",
-          airdrop_note: "منطق توزیع و کیف‌پول در فاز بعد اضافه می‌شود.",
-
-          store_title: "فروشگاه صلح",
-          store_lead: "یک لایه ساده برای مزایا و پیشنهادها. در MVP آیتم‌ها نمونه هستند.",
-          store_buy: "مشاهده",
-
-          news_title: "خبرنامه NGO و اخبار پروژه",
-          news_lead: "آپدیت‌های کوتاه و خوانا از پروژه و سازمان‌های همکار. سبک این صفحه عمدی ساده و قابل مرور طراحی شده.",
-
-          about_title: "درباره سربازان صلح",
-          about_lead: "«سربازان صلح» ماموریت‌های واقعی را به یک اقتصاد مشارکت شفاف و قابل رهگیری وصل می‌کند؛ انسانی، قابل اندازه‌گیری و سخت برای تقلب.",
-          about_body: "تمرکز ما روی اقدام‌های عملی، مسیرهای تایید روشن و یک ساختار بلندمدت است که بتواند مسئولانه رشد کند. Peace Pass نقطه ورود است: هویت، دسترسی و یک استاندارد ثابت برای سنجش مشارکت از طریق HII (Human Impact Index). این MVP جریان کاربر و معماری اطلاعات را نمایش می‌دهد. در فازهای بعد، کیف‌پول، پرداخت، همکاران تاییدکننده و حکمرانی اضافه می‌شوند.",
-
-          partners_title: "همکاران صلح",
-          partners_lead: "فضایی برای NGOها، شرکت‌ها و افراد که می‌خواهند در ماموریت‌ها، تایید، لجستیک یا پشتیبانی همکاری کنند.",
-          partners_ngos: "سازمان‌های مردم‌نهاد",
-          partners_companies: "شرکت‌ها",
-          partners_people: "افراد",
-          partners_cta: "درخواست همکاری (دمو)",
-
-          docs_title: "مستندات",
-          docs_lead: "اسناد پروژه و لینک‌های مهم. فایل‌ها در تب جدید باز می‌شوند.",
-          docs_repo: "ریپوی گیت‌هاب",
-          docs_whitepaper: "سپیدنامه",
-          docs_tokenomics: "توکنومیکس",
-          docs_business: "بیزینس پلن",
-          docs_exec: "خلاصه اجرایی",
-          docs_dao: "گزارش DAO",
-
-          token_title: "توکن صلح",
-          token_lead: "نمای کلی از توکن، TGE و منطق توزیع. جزئیات کامل داخل توکنومیکس است.",
-          token_tge: "TGE",
-          token_tge_p: "زمان‌بندی و پارامترهای نهایی TGE همراه با پکیج لانچ منتشر می‌شود. این صفحه در MVP ساختار و روایت را نشان می‌دهد، نه اعداد نهایی.",
-          token_why: "چرا وجود دارد",
-          token_why_p: "برای پشتیبانی از مشارکت، پاداش دادن به اثر تاییدشده و هم‌راستا کردن انگیزه‌های بلندمدت میان ماموریت‌ها، همکاران و خزانه.",
-          token_read: "مطالعه توکنومیکس (PDF)",
-
-          nft_title: "کالکشن NFT ارتش صلح",
-          nft_lead: "یک لایه عضویت برای هویت، حمایت اولیه و مزایای بلندمدت. این صفحه در MVP جایگزین اطلاعات لانچ خواهد شد.",
-          nft_cta: "لینک کالکشن (دمو)",
-
-          misc_points: "امتیاز",
-          misc_deadline: "ددلاین",
-          misc_hii: "HII",
-          misc_id: "شناسه",
-          misc_status: "وضعیت",
-          misc_active: "فعال"
-        }
-      };
-
-      function t(key){
-        const pack = I18N[state.lang] || I18N.en;
-        return pack[key] || I18N.en[key] || key;
-      }
-
-      function setLang(lang){
-        state.lang = (lang === "fa") ? "fa" : "en";
-        localStorage.setItem("ps_lang", state.lang);
-
-        document.documentElement.lang = state.lang;
-        document.documentElement.dir = (state.lang === "fa") ? "rtl" : "ltr";
-
-        // update language buttons
-        document.getElementById("btnEN").classList.toggle("active", state.lang === "en");
-        document.getElementById("btnFA").classList.toggle("active", state.lang === "fa");
-
-        // update static i18n nodes
-        document.querySelectorAll("[data-i18n]").forEach(el=>{
-          const key = el.getAttribute("data-i18n");
-          el.textContent = t(key);
-        });
-
-        // rebuild UI
-        buildTabs();
-        buildBottomNav();
-        renderRoute(state.route);
-      }
-
-      function detectLang(){
-        const saved = localStorage.getItem("ps_lang");
-        if (saved === "fa" || saved === "en") return saved;
-
-        let code = "en";
-        if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code){
-          code = tg.initDataUnsafe.user.language_code || "en";
-        } else if (navigator.language){
-          code = navigator.language;
-        }
-
-        const lc = String(code).toLowerCase();
-        if (lc.startsWith("fa") || lc.includes("ir")) return "fa";
-        return "en";
-      }
-
-      function hydrateUser(){
-        const u = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
-        if (!u) return;
-
-        state.user = {
-          first_name: u.first_name || "Guest",
-          last_name: u.last_name || "",
-          username: u.username || "guest",
-          id: u.id || 0,
-          language_code: u.language_code || "en"
-        };
-
-        const full = [state.user.first_name, state.user.last_name].filter(Boolean).join(" ").trim();
-        if (full) state.profile.fullName = full;
-
-        if (state.user.id) {
-          // demo format
-          const s = String(state.user.id).padStart(10, "0").slice(-10);
-          state.profile.peaceId = "PS-" + s;
-        }
-      }
-
-      const routes = [
-        { id:"home",     labelKey:"tab_home"     },
-        { id:"pass",     labelKey:"tab_pass"     },
-        { id:"missions", labelKey:"tab_missions" },
-        { id:"airdrop",  labelKey:"tab_airdrop"  },
-        { id:"store",    labelKey:"tab_store"    },
-        { id:"news",     labelKey:"tab_news"     },
-        { id:"about",    labelKey:"tab_about"    },
-        { id:"partners", labelKey:"tab_partners" },
-        { id:"docs",     labelKey:"tab_docs"     },
-        { id:"token",    labelKey:"tab_token"    },
-        { id:"nft",      labelKey:"tab_nft"      }
-      ];
-
-      const bottomRoutes = [
-        { id:"home", labelKey:"nav_home" },
-        { id:"pass", labelKey:"nav_pass" },
-        { id:"missions", labelKey:"nav_missions" },
-        { id:"store", labelKey:"nav_store" },
-        { id:"news", labelKey:"nav_news" }
-      ];
-
-      function go(route){
-        location.hash = "#" + route;
-      }
-
-      function currentHash(){
-        const h = (location.hash || "#home").replace("#","");
-        return routes.some(r=>r.id===h) ? h : "home";
-      }
-
-      function buildTabs(){
-        const tabs = document.getElementById("tabs");
-        tabs.innerHTML = "";
-        routes.forEach(r=>{
-          const b = document.createElement("button");
-          b.className = "tab" + (state.route === r.id ? " active" : "");
-          b.type = "button";
-          b.textContent = t(r.labelKey);
-          b.onclick = ()=> go(r.id);
-          tabs.appendChild(b);
-        });
-      }
-
-      function buildBottomNav(){
-        const nav = document.getElementById("bottomNav");
-        nav.innerHTML = "";
-        bottomRoutes.forEach(r=>{
-          const b = document.createElement("button");
-          b.className = "navBtn" + (state.route === r.id ? " active" : "");
-          b.type = "button";
-          b.textContent = t(r.labelKey);
-          b.onclick = ()=> go(r.id);
-          nav.appendChild(b);
-        });
-      }
-
-      function el(html){
-        const d = document.createElement("div");
-        d.innerHTML = html.trim();
-        return d.firstElementChild;
-      }
-
-      function fmtNum(n){
-        try{
-          if (state.lang === "fa") return new Intl.NumberFormat("fa-IR").format(n);
-          return new Intl.NumberFormat("en-US").format(n);
-        }catch(e){
-          return String(n);
-        }
-      }
-
-      function pageHome(){
-        const welcomeName = state.user.first_name || "Guest";
-        const convertInitialPeace = 50;
-        const usdt = +(convertInitialPeace * state.rate).toFixed(2);
-
-        return el(`
-          <div class="grid">
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("home_quick")}</h2>
-                <span class="badge gold">${t("misc_status")}: ${t("misc_active")}</span>
-              </div>
-              <p class="cardSub">${t("home_quick_p")}</p>
-
-              <div class="pillRow">
-                <button class="btn primary" type="button" data-go="pass">${t("tab_pass")}</button>
-                <button class="btn" type="button" data-go="missions">${t("tab_missions")}</button>
-                <button class="btn" type="button" data-go="airdrop">${t("tab_airdrop")}</button>
-                <button class="btn" type="button" data-go="store">${t("tab_store")}</button>
-                <button class="btn olive" type="button" data-go="docs">${t("tab_docs")}</button>
-              </div>
-
-              <div class="footerNote">
-                <span class="muted">${state.lang === "fa" ? "خوش آمدید" : "Welcome"} </span><strong>${welcomeName}</strong>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("pass_title")}</h2>
-                <span class="badge good">${state.profile.level}</span>
-              </div>
-
-              <div class="row">
-                <div>
-                  <div class="mini muted">${state.lang === "fa" ? "نام کامل" : "Full Name"}</div>
-                  <div style="font-weight:900; margin-top:2px;">${state.profile.fullName}</div>
-                  <div class="mini muted" style="margin-top:8px;">${state.lang === "fa" ? "Peace ID" : "Peace ID"}</div>
-                  <div style="font-weight:900; letter-spacing:.6px; margin-top:2px;">${state.profile.peaceId}</div>
-                </div>
-                <div style="width:54px; height:54px; border-radius:16px; border:1px solid rgba(0,0,0,.14); background:rgba(0,0,0,.05); display:grid; place-items:center; font-weight:900; color:rgba(0,0,0,.55);">
-                  P
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="row" style="align-items:flex-end;">
-                <div>
-                  <div class="mini muted">${state.lang === "fa" ? "Human Impact Index (HII)" : "Human Impact Index (HII)"}</div>
-                  <div class="kpi">${fmtNum(state.profile.hii)}</div>
-                </div>
-                <div style="min-width:120px;">
-                  <div class="mini muted" style="text-align:${state.lang==="fa"?"left":"right"};">${state.lang==="fa" ? "پیشرفت سطح بعد" : "Progress to next level"}</div>
-                  <div style="font-weight:900; text-align:${state.lang==="fa"?"left":"right"};">${fmtNum(state.profile.progress)}%</div>
-                </div>
-              </div>
-
-              <div class="progress" style="margin-top:10px;">
-                <div style="width:${state.profile.progress}%;"></div>
-              </div>
-
-              <div class="pillRow" style="margin-top:12px;">
-                <button class="btn primary" type="button" data-go="pass">${t("tab_pass")}</button>
-                <button class="btn" type="button" data-go="token">${t("tab_token")}</button>
-                <button class="btn gold" type="button" data-go="nft">${t("tab_nft")}</button>
-              </div>
-            </div>
-
-            <div class="card" style="grid-column: 1 / -1;">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("home_next")}</h2>
-                <span class="badge">${t("home_convert_title")}</span>
-              </div>
-
-              <div class="row">
-                <div>
-                  <div style="font-weight:900; font-size: 18px;">${fmtNum(convertInitialPeace)} $PEACE → ${fmtNum(usdt)} USDT</div>
-                  <div class="mini muted" style="margin-top:6px;">${t("home_convert_sub")}</div>
-                </div>
-                <button class="btn primary" type="button" id="convertBtnTop">${t("home_btn_convert")}</button>
-              </div>
-
-              <div class="twoCol">
-                <div class="field">
-                  <div class="label">${t("home_amount")}</div>
-                  <input type="number" id="peaceAmount" value="${convertInitialPeace}" min="0" step="1" inputmode="numeric" />
-                </div>
-                <div class="field">
-                  <div class="label">${t("home_est")}</div>
-                  <input type="text" id="usdtAmount" value="${usdt.toFixed(2)}" readonly />
-                </div>
-              </div>
-
-              <div class="row" style="margin-top:10px;">
-                <div class="mini">
-                  ${t("home_rate")}: <strong>${state.rate.toFixed(2)}</strong>
-                </div>
-                <div class="mini">
-                  ${t("home_fee")}: <strong>0.35%</strong>
-                </div>
-              </div>
-
-              <div class="pillRow" style="margin-top:12px;">
-                <button class="btn" type="button" data-go="missions">${t("tab_missions")}</button>
-                <button class="btn" type="button" data-go="airdrop">${t("tab_airdrop")}</button>
-                <button class="btn" type="button" data-go="store">${t("tab_store")}</button>
-                <button class="btn olive" type="button" data-go="partners">${t("tab_partners")}</button>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      function pagePass(){
-        return el(`
-          <div class="grid">
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("pass_title")}</h2>
-                <span class="badge good">${state.profile.level}</span>
-              </div>
-
-              <div class="row">
-                <div style="display:flex; gap:12px; align-items:center;">
-                  <div style="width:62px;height:62px;border-radius:18px;border:1px solid rgba(0,0,0,.14); background:rgba(0,0,0,.05);"></div>
-                  <div>
-                    <div style="font-weight:900; font-size:16px;">${state.profile.fullName}</div>
-                    <div class="mini muted">Peace ID: <strong>${state.profile.peaceId}</strong></div>
-                    <div class="mini muted" style="margin-top:6px;">
-                      ${state.lang==="fa" ? "عضویت:" : "Membership:"}
-                      <strong>${state.lang==="fa" ? "فعال (دمو)" : "Active (demo)"}</strong>
-                    </div>
-                  </div>
-                </div>
-                <div style="width:54px; height:54px; border-radius:16px; border:1px solid rgba(0,0,0,.14); background:rgba(0,0,0,.05); display:grid; place-items:center; font-weight:900; color:rgba(0,0,0,.55);">
-                  P
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="row" style="align-items:flex-end;">
-                <div>
-                  <div class="mini muted">HII</div>
-                  <div class="kpi">${fmtNum(state.profile.hii)}</div>
-                </div>
-                <div style="min-width:140px;">
-                  <div class="mini muted" style="text-align:${state.lang==="fa"?"left":"right"};">${state.lang==="fa" ? "پیشرفت سطح بعد" : "Progress to next level"}</div>
-                  <div style="font-weight:900; text-align:${state.lang==="fa"?"left":"right"};">${fmtNum(state.profile.progress)}%</div>
-                </div>
-              </div>
-
-              <div class="progress" style="margin-top:10px;">
-                <div style="width:${state.profile.progress}%;"></div>
-              </div>
-
-              <p class="cardSub" style="margin-top:12px;">${t("pass_pitch")}</p>
-
-              <div class="pillRow">
-                <button class="btn primary" type="button">${t("pass_cta")}</button>
-                <button class="btn" type="button" data-go="missions">${t("tab_missions")}</button>
-                <button class="btn gold" type="button" data-go="nft">${t("tab_nft")}</button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("pass_benefits")}</h2>
-                <span class="badge">${state.lang==="fa" ? "مزایا" : "Access"}</span>
-              </div>
-              <div class="list">
-                <div class="item"><strong>•</strong> ${t("pass_b1")}</div>
-                <div class="item"><strong>•</strong> ${t("pass_b2")}</div>
-                <div class="item"><strong>•</strong> ${t("pass_b3")}</div>
-                <div class="item"><strong>•</strong> ${t("pass_b4")}</div>
-              </div>
-
-              <div class="hr"></div>
-
-              <h3 class="cardTitle" style="font-size: var(--h3); margin:0;">${t("pass_how")}</h3>
-              <p class="cardSub">${t("pass_how_p")}</p>
-
-              <div class="pillRow">
-                <button class="btn olive" type="button" data-go="docs">${t("tab_docs")}</button>
-                <button class="btn" type="button" data-go="token">${t("tab_token")}</button>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      const missionData = [
-        {
-          id: "MS-001",
-          title_en: "Field Report (Pilot)",
-          title_fa: "ثبت گزارش میدانی (Pilot)",
-          desc_en: "Submit a short, documented field report (photo/text). Purpose: rehearsal for verified impact logs.",
-          desc_fa: "یک گزارش کوتاه و مستند (عکس/متن) ثبت کن. هدف: تمرین برای ثبت اثر تاییدپذیر.",
-          status_en: "In progress",
-          status_fa: "در حال انجام",
-          deadline: "2026-02-01",
-          hii: 25,
-          points: 120,
-          detail_en: "Add a photo + short description. Keep it factual. In later phases, partner verification can confirm completion.",
-          detail_fa: "یک عکس + توضیح کوتاه اضافه کن. متن را دقیق و واقعی نگه دار. در فازهای بعد، تایید همکاران اضافه می‌شود."
-        },
-        {
-          id: "MS-002",
-          title_en: "Local Volunteering (2h)",
-          title_fa: "داوطلبی محلی (۲ ساعت)",
-          desc_en: "Spend 2 hours helping in a local activity. Document what you did and what changed.",
-          desc_fa: "۲ ساعت در یک فعالیت محلی کمک کن. آنچه انجام دادی و نتیجه‌اش را ثبت کن.",
-          status_en: "Ongoing",
-          status_fa: "فعال",
-          deadline: "2026-02-10",
-          hii: 40,
-          points: 200,
-          detail_en: "Short proof: photo, note, or reference. Focus on clarity, not storytelling.",
-          detail_fa: "مدرک کوتاه: عکس، یادداشت یا رفرنس. تمرکز روی شفافیت باشد، نه داستان‌سرایی."
-        },
-        {
-          id: "MS-003",
-          title_en: "Invite 3 people",
-          title_fa: "معرفی پروژه به ۳ نفر",
-          desc_en: "Invite 3 people and explain Peace Pass in one paragraph (no hype).",
-          desc_fa: "پروژه را به ۳ نفر معرفی کن و در یک پاراگراف Peace Pass را توضیح بده (بدون اغراق).",
-          status_en: "Available",
-          status_fa: "در دسترس",
-          deadline: "2026-01-15",
-          hii: 15,
-          points: 80,
-          detail_en: "Share a short message and capture confirmation (screenshot).",
-          detail_fa: "یک پیام کوتاه ارسال کن و تایید دریافت را ثبت کن (اسکرین‌شات)."
-        },
-        {
-          id: "MS-004",
-          title_en: "Follow Peace Soldiers social channels",
-          title_fa: "فالو کردن شبکه‌های اجتماعی سربازان صلح",
-          desc_en: "Follow Instagram, X, and Discord to stay updated and support the launch.",
-          desc_fa: "اینستاگرام، ایکس و دیسکورد را فالو کن تا در جریان بمانی و از لانچ حمایت کنی.",
-          status_en: "Available",
-          status_fa: "در دسترس",
-          deadline: "2026-03-01",
-          hii: 10,
-          points: 60,
-          detail_en: "Open each channel and follow. Save proof (screenshots). Links are placeholders in MVP.",
-          detail_fa: "هر کانال را باز کن و فالو کن. مدرک را ذخیره کن (اسکرین‌شات). لینک‌ها در MVP نمونه هستند.",
-          socials: [
-            { name: "Instagram", url: "https://instagram.com/" },
-            { name: "X", url: "https://x.com/" },
-            { name: "Discord", url: "https://discord.com/" }
-          ]
-        }
-      ];
-
-      function missionCard(m){
-        const title = (state.lang==="fa") ? m.title_fa : m.title_en;
-        const desc  = (state.lang==="fa") ? m.desc_fa  : m.desc_en;
-        const status= (state.lang==="fa") ? m.status_fa: m.status_en;
-
-        const details = (state.lang==="fa") ? m.detail_fa : m.detail_en;
-
-        const socialLinks = (m.socials && m.socials.length)
-          ? `<div class="meta">
-              ${m.socials.map(s=>`<a class="badge" target="_blank" rel="noopener" href="${s.url}">${s.name}</a>`).join("")}
-            </div>`
-          : "";
-
-        return el(`
-          <div class="item">
-            <div class="itemTop">
-              <div>
-                <h3 class="itemTitle">${title}</h3>
-                <p class="itemDesc">${desc}</p>
-              </div>
-              <span class="badge">${status}</span>
-            </div>
-
-            <div class="meta">
-              <span class="badge">${t("misc_id")}: <strong>${m.id}</strong></span>
-              <span class="badge">${t("misc_deadline")}: <strong>${m.deadline}</strong></span>
-              <span class="badge gold">${t("misc_hii")}: <strong>+${m.hii}</strong></span>
-              <span class="badge good">${t("misc_points")}: <strong>${m.points}</strong></span>
-            </div>
-
-            ${socialLinks}
-
-            <div class="actions">
-              <button class="btn primary" type="button" data-join="${m.id}">${t("missions_join")}</button>
-              <button class="btn" type="button" data-toggle="${m.id}">${t("missions_details")}</button>
-            </div>
-
-            <div class="card" id="detail-${m.id}" style="margin-top:10px; display:none; padding:12px;">
-              <div class="row">
-                <div class="mini muted" style="max-width: 700px;">${details}</div>
-                <button class="btn" type="button" data-close="${m.id}">${t("missions_close")}</button>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      function pageMissions(){
-        const root = el(`
-          <div class="card">
-            <div class="cardHeader">
-              <h2 class="cardTitle">${t("missions_title")}</h2>
-              <span class="badge">${state.lang==="fa" ? "نمونه واقعی" : "Sample data"}</span>
-            </div>
-            <p class="cardSub">${t("missions_lead")}</p>
-            <div class="list" id="missionList"></div>
-          </div>
-        `);
-
-        const list = root.querySelector("#missionList");
-        missionData.forEach(m=> list.appendChild(missionCard(m)));
-
-        // interactions
-        root.addEventListener("click", (e)=>{
-          const tgt = e.target;
-          if (!(tgt instanceof HTMLElement)) return;
-
-          const toggleId = tgt.getAttribute("data-toggle");
-          const closeId  = tgt.getAttribute("data-close");
-          const joinId   = tgt.getAttribute("data-join");
-
-          if (toggleId){
-            const box = root.querySelector("#detail-" + toggleId);
-            if (box) box.style.display = (box.style.display === "none" ? "block" : "none");
+      // ---------- Data (sample) ----------
+      const sample = {
+        rate: 0.78,
+        missions: [
+          { id:"MS-001", status:"in_progress", title_en:"Field Report (Pilot)", title_fa:"ثبت گزارش میدانی (Pilot)", points:120, hii:25, deadline:"2026-02-01",
+            desc_en:"Submit a short, documented field report (photo/text). Purpose: rehearsal for verified impact logs.",
+            desc_fa:"یک گزارش کوتاه و مستند (عکس/متن) ثبت کن. هدف: تمرین برای لاگ‌های اثرگذاریِ قابل تأیید."
+          },
+          { id:"MS-002", status:"ongoing", title_en:"Local Volunteering (2h)", title_fa:"داوطلبی محلی (۲ ساعت)", points:200, hii:40, deadline:"2026-02-10",
+            desc_en:"Spend 2 hours in a local activity. Share a short note and a photo proof (where appropriate).",
+            desc_fa:"۲ ساعت در یک فعالیت محلی شرکت کن. یک یادداشت کوتاه و در صورت امکان عکسِ اثبات ارائه بده."
+          },
+          { id:"MS-003", status:"available", title_en:"Invite 3 friends", title_fa:"معرفی پروژه به ۳ نفر", points:80, hii:15, deadline:"2026-01-15",
+            desc_en:"Invite 3 friends to the network. Keep it honest: explain what it is and what it is not.",
+            desc_fa:"پروژه را به ۳ نفر معرفی کن. شفاف بگو این پروژه چیست و چه چیزی نیست."
+          },
+          { id:"MS-004", status:"available", title_en:"Follow Peace Soldiers socials", title_fa:"فالو کردن شبکه‌های اجتماعی سربازان صلح", points:90, hii:10, deadline:"2026-02-20",
+            desc_en:"Follow Peace Soldiers on Instagram, X, and Discord. This helps distribution and early community health.",
+            desc_fa:"اینستاگرام، X و دیسکورد سربازان صلح را فالو کن. این کار به رشد سالم جامعه اولیه کمک می‌کند."
           }
-          if (closeId){
-            const box = root.querySelector("#detail-" + closeId);
-            if (box) box.style.display = "none";
-          }
-          if (joinId){
-            // MVP demo action
-            try{
-              if (tg) tg.showPopup({
-                title: state.lang==="fa" ? "دمو" : "Demo",
-                message: state.lang==="fa" ? "این فقط پیش‌نمایش است. در فاز بعد ثبت واقعی اضافه می‌شود." : "Preview only. Real submission is added in later phases.",
-                buttons: [{type:"ok"}]
-              });
-              else alert(state.lang==="fa" ? "دمو: ثبت واقعی در فاز بعد اضافه می‌شود." : "Demo: real submission will be added later.");
-            }catch(e){
-              alert(state.lang==="fa" ? "دمو: ثبت واقعی در فاز بعد اضافه می‌شود." : "Demo: real submission will be added later.");
-            }
-          }
-        });
-
-        return root;
-      }
-
-      function pageAirdrop(){
-        return el(`
-          <div class="grid">
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("airdrop_title")}</h2>
-                <span class="badge">${state.lang==="fa" ? "MVP" : "MVP"}</span>
-              </div>
-              <p class="cardSub">${t("airdrop_lead")}</p>
-
-              <div class="hr"></div>
-
-              <h3 class="cardTitle" style="font-size: var(--h3); margin:0;">${t("airdrop_elig")}</h3>
-              <div class="list">
-                <div class="item">• ${t("airdrop_rule1")}</div>
-                <div class="item">• ${t("airdrop_rule2")}</div>
-                <div class="item">• ${t("airdrop_rule3")}</div>
-              </div>
-
-              <div class="footerNote">${t("airdrop_note")}</div>
-
-              <div class="pillRow">
-                <button class="btn primary" type="button" data-go="missions">${t("tab_missions")}</button>
-                <button class="btn" type="button" data-go="pass">${t("tab_pass")}</button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${state.lang==="fa" ? "نمونه وضعیت" : "Sample status"}</h2>
-                <span class="badge gold">${state.lang==="fa" ? "قابل ارتقا" : "Upgradeable"}</span>
-              </div>
-
-              <div class="item">
-                <div class="mini muted">${state.lang==="fa" ? "وضعیت" : "Status"}</div>
-                <div style="font-weight:900; margin-top:4px;">${state.lang==="fa" ? "Eligible? (Demo)" : "Eligible? (Demo)"}</div>
-                <div class="mini muted" style="margin-top:8px;">
-                  ${state.lang==="fa" ? "برای واجد شرایط شدن، ۲ ماموریت انجام بده." : "Complete 2 missions to qualify."}
-                </div>
-              </div>
-
-              <div class="pillRow">
-                <button class="btn olive" type="button" data-go="docs">${t("tab_docs")}</button>
-                <button class="btn" type="button" data-go="token">${t("tab_token")}</button>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      const storeItems = [
-        { title_en:"Impact Badge (Sample)", title_fa:"نشان اثر (نمونه)", desc_en:"A simple badge for demo purposes.", desc_fa:"یک نشان ساده برای نمایش در MVP.", tag:"Demo" },
-        { title_en:"Partner Offer (Sample)", title_fa:"پیشنهاد همکار (نمونه)", desc_en:"A placeholder offer card.", desc_fa:"کارت نمونه پیشنهاد.", tag:"Offer" }
-      ];
-
-      function pageStore(){
-        const list = storeItems.map(it=>{
-          const title = state.lang==="fa" ? it.title_fa : it.title_en;
-          const desc  = state.lang==="fa" ? it.desc_fa  : it.desc_en;
-          return `
-            <div class="item">
-              <div class="itemTop">
-                <div>
-                  <h3 class="itemTitle">${title}</h3>
-                  <p class="itemDesc">${desc}</p>
-                </div>
-                <span class="badge">${it.tag}</span>
-              </div>
-              <div class="actions">
-                <button class="btn primary" type="button">${t("store_buy")}</button>
-              </div>
-            </div>
-          `;
-        }).join("");
-
-        return el(`
-          <div class="card">
-            <div class="cardHeader">
-              <h2 class="cardTitle">${t("store_title")}</h2>
-              <span class="badge">${state.lang==="fa" ? "نمونه" : "Sample"}</span>
-            </div>
-            <p class="cardSub">${t("store_lead")}</p>
-            <div class="list">${list}</div>
-          </div>
-        `);
-      }
-
-      const newsItems = [
-        { date:"2026-01-08", title_en:"MVP demo flow published", title_fa:"انتشار نسخه MVP (دمو)", body_en:"Initial mini app structure is live with sample data and bilingual UI.", body_fa:"ساختار اولیه مینی‌اپ با داده نمونه و رابط دو زبانه آماده است." },
-        { date:"2026-01-12", title_en:"Partner outreach begins", title_fa:"شروع ارتباط با همکاران", body_en:"We begin outreach to NGOs and local partners for mission verification pathways.", body_fa:"ارتباط با NGOها و همکاران محلی برای مسیرهای تایید ماموریت‌ها شروع می‌شود." },
-        { date:"2026-01-18", title_en:"NGO newsletter: pilot programs", title_fa:"خبرنامه NGO: برنامه‌های پایلوت", body_en:"Pilot missions are prepared for clearer documentation and measurable outcomes.", body_fa:"ماموریت‌های پایلوت برای مستندسازی بهتر و خروجی قابل اندازه‌گیری آماده می‌شوند." }
-      ];
-
-      function pageNews(){
-        const list = newsItems.map(n=>{
-          const title = state.lang==="fa" ? n.title_fa : n.title_en;
-          const body  = state.lang==="fa" ? n.body_fa  : n.body_en;
-          return `
-            <div class="item">
-              <div class="itemTop">
-                <div>
-                  <h3 class="itemTitle">${title}</h3>
-                  <p class="itemDesc">${body}</p>
-                </div>
-                <span class="badge">${n.date}</span>
-              </div>
-            </div>
-          `;
-        }).join("");
-
-        return el(`
-          <div class="card">
-            <div class="cardHeader">
-              <h2 class="cardTitle">${t("news_title")}</h2>
-              <span class="badge">${state.lang==="fa" ? "خبرنامه" : "Updates"}</span>
-            </div>
-            <p class="cardSub">${t("news_lead")}</p>
-            <div class="list">${list}</div>
-          </div>
-        `);
-      }
-
-      function pageAbout(){
-        return el(`
-          <div class="grid">
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("about_title")}</h2>
-                <span class="badge gold">${state.lang==="fa" ? "بینش" : "Vision"}</span>
-              </div>
-              <p class="cardSub">${t("about_lead")}</p>
-              <div class="hr"></div>
-              <p class="cardSub">${t("about_body")}</p>
-
-              <div class="pillRow">
-                <button class="btn olive" type="button" data-go="docs">${t("tab_docs")}</button>
-                <button class="btn" type="button" data-go="partners">${t("tab_partners")}</button>
-                <button class="btn gold" type="button" data-go="token">${t("tab_token")}</button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${state.lang==="fa" ? "مسیر MVP" : "MVP path"}</h2>
-                <span class="badge">${state.lang==="fa" ? "شفاف" : "Clear"}</span>
-              </div>
-              <div class="list">
-                <div class="item">• ${state.lang==="fa" ? "Peace Pass: هویت و دسترسی" : "Peace Pass: identity and access"}</div>
-                <div class="item">• ${state.lang==="fa" ? "Missions: ماموریت و امتیاز" : "Missions: participation and points"}</div>
-                <div class="item">• ${state.lang==="fa" ? "Airdrop: پاداش بر اساس مشارکت" : "Airdrop: participation-based rewards"}</div>
-                <div class="item">• ${state.lang==="fa" ? "Store: مزایا و پیشنهادها" : "Store: perks and offers"}</div>
-                <div class="item">• ${state.lang==="fa" ? "News: خبرنامه و آپدیت‌ها" : "News: updates and newsletter"}</div>
-              </div>
-              <div class="footerNote">
-                ${state.lang==="fa"
-                  ? "در فازهای بعد: کیف‌پول، پرداخت، تایید همکاران، و حکمرانی اضافه می‌شود."
-                  : "Later phases add wallet, payments, partner verification, and governance."}
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      const partnerData = {
-        ngos: [
-          { name:"Sample NGO 1", role_en:"Pilot verification", role_fa:"تایید پایلوت" },
-          { name:"Sample NGO 2", role_en:"Local operations", role_fa:"عملیات محلی" }
         ],
-        companies: [
-          { name:"Sample Company", role_en:"Logistics / support", role_fa:"لجستیک / پشتیبانی" }
+        store: [
+          { title_en:"Partner discount (pilot)", title_fa:"تخفیف همکاران (پایلوت)", tag_en:"2 offers", tag_fa:"۲ پیشنهاد",
+            body_en:"A preview slot for partner offers. Later phases connect to verified partners and missions.",
+            body_fa:"جایگاه نمایشی برای پیشنهادهای همکاران. در فازهای بعدی به همکاران تأییدشده و ماموریت‌ها متصل می‌شود."
+          },
+          { title_en:"Donation-linked item (preview)", title_fa:"آیتم همراه با کمک (نمایش)", tag_en:"Preview", tag_fa:"نمایش",
+            body_en:"Some items may link to transparent donation flows and public reporting.",
+            body_fa:"برخی آیتم‌ها می‌توانند به جریان‌های کمک شفاف و گزارش‌دهی عمومی متصل باشند."
+          }
         ],
-        people: [
-          { name:"Volunteers", role_en:"Mission support", role_fa:"پشتیبانی ماموریت" }
+        news: [
+          { date:"2026-01-08", title_en:"MVP documentation published", title_fa:"مستندات MVP منتشر شد",
+            body_en:"The documentation pack is now accessible from the mini app. Links are hosted from the /docs folder.",
+            body_fa:"پکیج مستندات از داخل مینی‌اپ در دسترس است. لینک‌ها از پوشه /docs سرو می‌شوند."
+          },
+          { date:"2026-01-03", title_en:"Mission templates refined", title_fa:"قالب ماموریت‌ها بهبود یافت",
+            body_en:"Mission cards now include clear scope, points, HII impact, and deadlines.",
+            body_fa:"کارت‌های ماموریت حالا محدوده، امتیاز، اثر HII و ددلاین را شفاف نشان می‌دهند."
+          }
+        ],
+        partners: [
+          { type_en:"NGO", type_fa:"سازمان مردم‌نهاد", name_en:"Partner NGO (placeholder)", name_fa:"ان‌جی‌او همکار (نمونه)",
+            body_en:"Field verification + reporting collaboration (pilot).",
+            body_fa:"همکاری برای تأیید میدانی و گزارش‌دهی (پایلوت)."
+          },
+          { type_en:"Company", type_fa:"شرکت", name_en:"Sponsor Company (placeholder)", name_fa:"شرکت حامی (نمونه)",
+            body_en:"Logistics support and community benefits (preview).",
+            body_fa:"پشتیبانی لجستیک و مزایای جامعه (نمایش)."
+          },
+          { type_en:"Individual", type_fa:"فرد", name_en:"Volunteer Lead (placeholder)", name_fa:"مسئول داوطلبی (نمونه)",
+            body_en:"Local coordination for mission programs.",
+            body_fa:"هماهنگی محلی برای برنامه‌های ماموریت."
+          }
+        ],
+        docs: [
+          { key:"WhitePaper", file:"WhitePaper.pdf", title_en:"Whitepaper", title_fa:"سپیدنامه" },
+          { key:"Tokenomics", file:"Tokenomics.pdf", title_en:"Tokenomics", title_fa:"توکنومیکس" },
+          { key:"BusinessPlan", file:"BusinessPlan.pdf", title_en:"Business Plan", title_fa:"بیزینس پلن" },
+          { key:"ExecutiveSummary", file:"ExecutiveSummary.pdf", title_en:"Executive Summary", title_fa:"خلاصه اجرایی" },
+          { key:"DAO", file:"DAO.pdf", title_en:"DAO Master", title_fa:"گزارش DAO" }
         ]
       };
 
-      function pagePartners(){
-        const block = (titleKey, arr, badgeText)=>`
-          <div class="item">
-            <div class="itemTop">
-              <div>
-                <h3 class="itemTitle">${titleKey}</h3>
-                <p class="itemDesc">${state.lang==="fa" ? "نمونه لیست برای MVP. بعداً با داده واقعی جایگزین می‌شود." : "Sample list for MVP. Will be replaced with real partners."}</p>
-              </div>
-              <span class="badge">${badgeText}</span>
-            </div>
-            <div class="meta">
-              ${arr.map(x=>{
-                const role = state.lang==="fa" ? x.role_fa : x.role_en;
-                return `<span class="badge"><strong>${x.name}</strong> • ${role}</span>`;
-              }).join("")}
-            </div>
-          </div>
-        `;
+      // ---------- i18n ----------
+      const i18n = {
+        en: {
+          brandTitle:"Peace Soldiers",
+          brandSub:"Official Peace Pass",
+          heroNote:"Peace Pass is the identity layer for missions access, HII scoring, airdrops, and the Peace Store.",
+          ctx:"MVP",
+          nav:{
+            home:"Home", pass:"Peace Pass", missions:"Missions", airdrop:"Airdrop", store:"Peace Store",
+            news:"News", docs:"Documentation", partners:"Partners", token:"Token", nft:"Peace Army NFT", about:"About"
+          },
+          homeTitle:"Quick Summary",
+          homeDesc:"Your start point: a clear snapshot of your pass, the next best action, and direct paths to Missions, Airdrop, and the Store.",
+          nextActionSub:"Preview only. Wallet and payments will be added in later phases.",
+          tiles:{missions:"Missions", airdrop:"Airdrop", store:"Peace Store", msub:"3 active", asub:"Eligibility check", ssub:"2 offers"},
+          chips:{hii:"HII", level:"Level", member:"Member since"},
+          passTitle:"Peace Pass",
+          passDesc:"A calm, official credential designed for real participation. Your pass connects identity, mission activity, and verified impact.",
+          pidLabel:"Peace ID:",
+          passCardTitle:"Peace Pass Snapshot",
+          whyTitle:"Why it matters",
+          whyBody:"Peace Pass is designed to feel official and stable. The goal is simple: make participation measurable, auditable, and rewarding, without turning impact into noise.",
+          joinPass:"Get Your Pass",
+          viewDocs:"View Documentation",
+          missionsTitle:"Missions",
+          missionsDesc:"Missions are the path to real participation. Each mission has a clear scope, points, and impact reflected in your HII after completion.",
+          join:"Join",
+          details:"Details",
+          airdropTitle:"Airdrop",
+          airdropDesc:"Eligibility and distribution rules will be published transparently. For now, this is a preview of the flow.",
+          check:"Check (Demo)",
+          storeTitle:"Peace Store",
+          storeDesc:"A calm, mission-aligned store. Offers focus on practical value, partner discounts, and donation-linked items.",
+          newsTitle:"News & Newsletter",
+          newsDesc:"Project updates and NGO field notes in one place. Clear, time-stamped, and easy to share.",
+          newsletterTitle:"Newsletter",
+          newsletterBody:"Subscribe to receive a short monthly digest: missions launched, partner highlights, and progress notes.",
+          email:"Email",
+          name:"Name",
+          subscribe:"Subscribe",
+          copyLink:"Copy updates link",
+          partnersTitle:"Peace Partners",
+          partnersDesc:"NGOs, companies, and individuals who support missions, verification, logistics, and community programs.",
+          becomePartner:"Become a partner",
+          partnerBody:"If you run an NGO or represent a company interested in verified impact programs, we can align on mission scope, reporting format, and a transparent public log.",
+          contact:"Contact (Demo)",
+          tokenTitle:"Peace Token",
+          tokenDesc:"A utility token designed to support participation, incentives, and transparent funding flows.",
+          nftTitle:"Peace Army NFT Collection",
+          nftDesc:"A collection designed to support community identity, early participation, and long-term engagement.",
+          docsTitle:"Documentation",
+          docsDesc:"Official documents and repository links. Files open from the /docs folder.",
+          repoTitle:"GitHub Repository",
+          repoBody:"Code and project history.",
+          open:"Open",
+          download:"Download",
+          copy:"Copy link",
+          aboutTitle:"About",
+          aboutDesc:"Peace Soldiers is building a human-centered network where real missions connect to transparent funding and measurable outcomes.",
+          convert:"Convert",
+          convertSub:"This is a preview of the UX. Later phases connect to wallet and pricing sources.",
+          sampleRate:"Sample rate:"
+        },
+        fa: {
+          brandTitle:"سربازان صلح",
+          brandSub:"پاسپورت رسمی صلح",
+          heroNote:"Peace Pass لایه هویت دیجیتال سربازان صلح است: دسترسی به ماموریت‌ها، امتیازدهی HII، ایردراپ و فروشگاه صلح.",
+          ctx:"نسخه MVP",
+          nav:{
+            home:"خانه", pass:"پاسپورت صلح", missions:"ماموریت‌ها", airdrop:"ایردراپ", store:"فروشگاه صلح",
+            news:"اخبار", docs:"مستندات", partners:"همکاران صلح", token:"توکن صلح", nft:"کالکشن NFT", about:"درباره ما"
+          },
+          homeTitle:"خلاصه سریع",
+          homeDesc:"نقطه شروع کاربر: یک نمای روشن از پاس، اقدام پیشنهادی بعدی و مسیرهای مستقیم به ماموریت‌ها، ایردراپ و فروشگاه.",
+          nextActionSub:"فقط نمایش رابط کاربری. کیف پول و پرداخت‌ها در فازهای بعد اضافه می‌شوند.",
+          tiles:{missions:"ماموریت‌ها", airdrop:"ایردراپ", store:"فروشگاه صلح", msub:"۳ فعال", asub:"بررسی شرایط", ssub:"۲ پیشنهاد"},
+          chips:{hii:"HII", level:"سطح", member:"عضویت از"},
+          passTitle:"پاسپورت صلح",
+          passDesc:"یک اعتبارنامه آرام و رسمی برای مشارکت واقعی. پاس شما هویت، فعالیت‌های ماموریتی و اثرگذاریِ قابل تأیید را به هم وصل می‌کند.",
+          pidLabel:"Peace ID:",
+          passCardTitle:"نمای پاسپورت",
+          whyTitle:"چرا مهم است",
+          whyBody:"پاسپورت صلح قرار است حس رسمی و پایدار داشته باشد. هدف ساده است: مشارکت را قابل اندازه‌گیری، قابل پیگیری و قابل پاداش کنیم، بدون شلوغ‌کاری.",
+          joinPass:"دریافت پاسپورت",
+          viewDocs:"مشاهده مستندات",
+          missionsTitle:"ماموریت‌ها",
+          missionsDesc:"ماموریت‌ها مسیر مشارکت واقعی‌اند. هر ماموریت محدوده، امتیاز و اثر مشخص دارد و بعد از انجام در HII منعکس می‌شود.",
+          join:"شروع",
+          details:"جزئیات",
+          airdropTitle:"ایردراپ",
+          airdropDesc:"قواعد و شرایط ایردراپ به‌صورت شفاف منتشر می‌شود. فعلا این بخش پیش‌نمایش جریان کار است.",
+          check:"بررسی (دمو)",
+          storeTitle:"فروشگاه صلح",
+          storeDesc:"فروشگاهی آرام و همسو با ماموریت‌ها. تمرکز روی ارزش واقعی، تخفیف همکاران و موارد مرتبط با کمک شفاف.",
+          newsTitle:"اخبار و خبرنامه",
+          newsDesc:"آپدیت‌های پروژه و گزارش‌های میدانی در یک جا. کوتاه، تاریخ‌دار و قابل اشتراک.",
+          newsletterTitle:"خبرنامه",
+          newsletterBody:"برای دریافت یک خلاصه ماهانه ثبت‌نام کن: ماموریت‌های جدید، همکاران، و گزارش پیشرفت.",
+          email:"ایمیل",
+          name:"نام",
+          subscribe:"ثبت‌نام",
+          copyLink:"کپی لینک آپدیت‌ها",
+          partnersTitle:"همکاران صلح",
+          partnersDesc:"سازمان‌های مردم‌نهاد، شرکت‌ها و افرادی که به ماموریت‌ها، تأیید، لجستیک و برنامه‌های اجتماعی کمک می‌کنند.",
+          becomePartner:"همکاری با ما",
+          partnerBody:"اگر نماینده یک NGO یا شرکت هستی، می‌توانیم روی محدوده ماموریت‌ها، قالب گزارش‌دهی و لاگ شفاف عمومی هم‌راستا شویم.",
+          contact:"تماس (دمو)",
+          tokenTitle:"توکن صلح",
+          tokenDesc:"توکن کاربردی برای حمایت از مشارکت، مشوق‌ها و جریان‌های شفاف تامین مالی.",
+          nftTitle:"کالکشن NFT ارتش صلح",
+          nftDesc:"کالکشنی برای هویت جامعه، مشارکت اولیه و تعامل بلندمدت.",
+          docsTitle:"مستندات",
+          docsDesc:"اسناد رسمی و لینک‌های پروژه. فایل‌ها از پوشه /docs باز می‌شوند.",
+          repoTitle:"ریپازیتوری گیت‌هاب",
+          repoBody:"کد و تاریخچه پروژه.",
+          open:"باز کردن",
+          download:"دانلود",
+          copy:"کپی لینک",
+          aboutTitle:"درباره ما",
+          aboutDesc:"سربازان صلح یک شبکه انسان‌محور می‌سازد که ماموریت‌های واقعی را به تامین مالی شفاف و خروجی‌های قابل اندازه‌گیری وصل می‌کند.",
+          convert:"تبدیل",
+          convertSub:"این بخش پیش‌نمایش UX است. در فازهای بعد به کیف پول و قیمت‌گذاری متصل می‌شود.",
+          sampleRate:"نرخ نمونه:"
+        }
+      };
 
-        return el(`
-          <div class="card">
-            <div class="cardHeader">
-              <h2 class="cardTitle">${t("partners_title")}</h2>
-              <span class="badge olive">${state.lang==="fa" ? "همکاری" : "Collaboration"}</span>
-            </div>
-            <p class="cardSub">${t("partners_lead")}</p>
+      // ---------- Helpers ----------
+      const $ = (id)=>document.getElementById(id);
+      const qsa = (sel, root=document)=>Array.from(root.querySelectorAll(sel));
 
-            <div class="list">
-              ${block(t("partners_ngos"), partnerData.ngos, "NGO")}
-              ${block(t("partners_companies"), partnerData.companies, "Business")}
-              ${block(t("partners_people"), partnerData.people, "People")}
-            </div>
-
-            <div class="pillRow">
-              <button class="btn primary" type="button">${t("partners_cta")}</button>
-              <button class="btn" type="button" data-go="missions">${t("tab_missions")}</button>
-              <button class="btn olive" type="button" data-go="docs">${t("tab_docs")}</button>
-            </div>
-          </div>
-        `);
+      function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+      function formatNum(n, digits=2){
+        const x = Number(n);
+        if (!isFinite(x)) return "0.00";
+        return x.toFixed(digits);
       }
 
-      function pageDocs(){
-        // Put PDFs inside /docs next to index.html (same folder).
-        const repoUrl = "https://github.com/peace-soldiers/peace-pass";
-
-        const docs = [
-          { key:"docs_whitepaper", file:"WhitePaper.pdf" },
-          { key:"docs_tokenomics", file:"Tokenomics.pdf" },
-          { key:"docs_business",   file:"BusinessPlan.pdf" },
-          { key:"docs_exec",       file:"Executive%20Summary.pdf" },
-          { key:"docs_dao",        file:"DAO.pdf" }
-        ];
-
-        const docList = docs.map(d=>`
-          <div class="item">
-            <div class="itemTop">
-              <div>
-                <h3 class="itemTitle">${t(d.key)}</h3>
-                <p class="itemDesc">${state.lang==="fa" ? "باز کردن فایل PDF از پوشه docs." : "Open the PDF file from docs folder."}</p>
-              </div>
-              <span class="badge">PDF</span>
-            </div>
-            <div class="actions">
-              <a class="btn primary" href="./${d.file}" target="_blank" rel="noopener">${state.lang==="fa" ? "باز کردن" : "Open"}</a>
-              <a class="btn" href="./${d.file}" download>${state.lang==="fa" ? "دانلود" : "Download"}</a>
-            </div>
-          </div>
-        `).join("");
-
-        return el(`
-          <div class="grid">
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("docs_title")}</h2>
-                <span class="badge">${state.lang==="fa" ? "لینک‌ها" : "Links"}</span>
-              </div>
-              <p class="cardSub">${t("docs_lead")}</p>
-
-              <div class="item" style="margin-top:12px;">
-                <div class="itemTop">
-                  <div>
-                    <h3 class="itemTitle">${t("docs_repo")}</h3>
-                    <p class="itemDesc">${state.lang==="fa" ? "کد و تاریخچه تغییرات پروژه." : "Code and project history."}</p>
-                  </div>
-                  <span class="badge">GitHub</span>
-                </div>
-                <div class="actions">
-                  <a class="btn primary" href="${repoUrl}" target="_blank" rel="noopener">Open</a>
-                </div>
-              </div>
-
-              <div class="pillRow">
-                <button class="btn" type="button" data-go="token">${t("tab_token")}</button>
-                <button class="btn gold" type="button" data-go="nft">${t("tab_nft")}</button>
-              </div>
-
-              <div class="footerNote">
-                ${state.lang==="fa"
-                  ? "نکته: نام فایل‌ها باید دقیقاً با همین لینک‌ها یکی باشد (حروف بزرگ/کوچک مهم است)."
-                  : "Note: file names must match exactly (case-sensitive)."}
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${state.lang==="fa" ? "فایل‌ها" : "Files"}</h2>
-                <span class="badge">${state.lang==="fa" ? "docs/" : "docs/"}</span>
-              </div>
-              <div class="list">
-                ${docList}
-              </div>
-            </div>
-          </div>
-        `);
+      function safeOpenLink(url){
+        // Prefer Telegram WebApp openLink when inside Telegram.
+        try{
+          if (tg && tg.openLink){
+            tg.openLink(url, { try_instant_view: false });
+            return;
+          }
+        }catch(e){}
+        window.open(url, "_blank", "noopener,noreferrer");
       }
 
-      function pageToken(){
-        return el(`
-          <div class="grid">
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("token_title")}</h2>
-                <span class="badge gold">${state.lang==="fa" ? "TGE / Tokenomics" : "TGE / Tokenomics"}</span>
-              </div>
-              <p class="cardSub">${t("token_lead")}</p>
-
-              <div class="hr"></div>
-
-              <h3 class="cardTitle" style="font-size: var(--h3); margin:0;">${t("token_tge")}</h3>
-              <p class="cardSub">${t("token_tge_p")}</p>
-
-              <div class="hr"></div>
-
-              <h3 class="cardTitle" style="font-size: var(--h3); margin:0;">${t("token_why")}</h3>
-              <p class="cardSub">${t("token_why_p")}</p>
-
-              <div class="pillRow">
-                <a class="btn primary" href="./Tokenomics.pdf" target="_blank" rel="noopener">${t("token_read")}</a>
-                <button class="btn" type="button" data-go="docs">${t("tab_docs")}</button>
-              </div>
-
-              <div class="footerNote">
-                ${state.lang==="fa"
-                  ? "این صفحه جنبه معرفی دارد و جایگزین سند توکنومیکس نیست."
-                  : "This page is an overview and does not replace Tokenomics."}
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${state.lang==="fa" ? "نمای سریع" : "Quick view"}</h2>
-                <span class="badge">${state.lang==="fa" ? "دمو" : "Demo"}</span>
-              </div>
-
-              <div class="list">
-                <div class="item">
-                  <div class="mini muted">${state.lang==="fa" ? "کاربرد" : "Use"}</div>
-                  <div style="margin-top:4px; font-weight:900;">
-                    ${state.lang==="fa" ? "پاداش مشارکت، دسترسی، و هم‌راستاسازی انگیزه‌ها" : "Rewards, access, and incentive alignment"}
-                  </div>
-                </div>
-
-                <div class="item">
-                  <div class="mini muted">${state.lang==="fa" ? "توزیع" : "Distribution"}</div>
-                  <div style="margin-top:4px; font-weight:900;">
-                    ${state.lang==="fa" ? "از طریق ماموریت‌ها، خزانه، و برنامه لانچ" : "Via missions, treasury, and launch program"}
-                  </div>
-                </div>
-
-                <div class="item">
-                  <div class="mini muted">${state.lang==="fa" ? "شفافیت" : "Transparency"}</div>
-                  <div style="margin-top:4px; font-weight:900;">
-                    ${state.lang==="fa" ? "سند توکنومیکس + گزارش‌های دوره‌ای" : "Tokenomics + periodic reports"}
-                  </div>
-                </div>
-              </div>
-
-              <div class="pillRow">
-                <button class="btn" type="button" data-go="missions">${t("tab_missions")}</button>
-                <button class="btn olive" type="button" data-go="partners">${t("tab_partners")}</button>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      function pageNFT(){
-        return el(`
-          <div class="grid">
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${t("nft_title")}</h2>
-                <span class="badge">${state.lang==="fa" ? "Membership" : "Membership"}</span>
-              </div>
-              <p class="cardSub">${t("nft_lead")}</p>
-
-              <div class="list">
-                <div class="item">
-                  <div class="mini muted">${state.lang==="fa" ? "هدف" : "Purpose"}</div>
-                  <div style="margin-top:4px; font-weight:900;">
-                    ${state.lang==="fa" ? "عضویت، حمایت اولیه، و مزایای بلندمدت" : "Membership, early support, long-term perks"}
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="mini muted">${state.lang==="fa" ? "هم‌راستایی" : "Alignment"}</div>
-                  <div style="margin-top:4px; font-weight:900;">
-                    ${state.lang==="fa" ? "برای جامعه‌ای که می‌خواهد اثر واقعی ثبت کند" : "For a community focused on real, measurable impact"}
-                  </div>
-                </div>
-              </div>
-
-              <div class="pillRow">
-                <button class="btn primary" type="button">${t("nft_cta")}</button>
-                <button class="btn" type="button" data-go="pass">${t("tab_pass")}</button>
-                <button class="btn gold" type="button" data-go="token">${t("tab_token")}</button>
-              </div>
-
-              <div class="footerNote">
-                ${state.lang==="fa"
-                  ? "لینک نهایی کالکشن هنگام انتشار رسمی جایگزین می‌شود."
-                  : "Final collection link will be added at launch."}
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="cardHeader">
-                <h2 class="cardTitle">${state.lang==="fa" ? "نمونه مزایا" : "Sample perks"}</h2>
-                <span class="badge gold">${state.lang==="fa" ? "دمو" : "Demo"}</span>
-              </div>
-
-              <div class="list">
-                <div class="item">• ${state.lang==="fa" ? "دسترسی سریع‌تر به ماموریت‌های منتخب" : "Priority access to select missions"}</div>
-                <div class="item">• ${state.lang==="fa" ? "نشان‌های اختصاصی داخل Peace Pass" : "Exclusive badges inside Peace Pass"}</div>
-                <div class="item">• ${state.lang==="fa" ? "مزایای فروشگاه و پیشنهادهای همکاران" : "Store perks and partner offers"}</div>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      function bindInternalLinks(root){
-        root.querySelectorAll("[data-go]").forEach(btn=>{
-          btn.addEventListener("click", ()=>{
-            const r = btn.getAttribute("data-go");
-            if (r) go(r);
-          });
+      function copyText(text){
+        const ok = navigator.clipboard && navigator.clipboard.writeText
+          ? navigator.clipboard.writeText(text).then(()=>true).catch(()=>false)
+          : Promise.resolve(false);
+        return ok.then(success=>{
+          if (success) return true;
+          // fallback
+          try{
+            const ta=document.createElement("textarea");
+            ta.value=text; document.body.appendChild(ta);
+            ta.select(); document.execCommand("copy");
+            document.body.removeChild(ta);
+            return true;
+          }catch(e){ return false; }
         });
       }
 
-      function renderRoute(route){
-        state.route = route;
-        buildTabs();
-        buildBottomNav();
+      // ---------- Runtime user ----------
+      const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
+      const firstName = user && (user.first_name || user.username) ? (user.first_name || user.username) : "Guest";
+      const lastName = user && user.last_name ? user.last_name : "";
+      const fullName = (lastName ? `${firstName} ${lastName}` : firstName).trim();
 
-        const content = document.getElementById("content");
-        content.innerHTML = "";
+      // Derive sample Peace ID (stable-ish for demo)
+      const uid = user && user.id ? String(user.id) : "12345678";
+      const peaceId = `PS-${uid.padStart(10,"0").slice(0,10)}`;
 
-        let node = null;
-        switch(route){
-          case "home": node = pageHome(); break;
-          case "pass": node = pagePass(); break;
-          case "missions": node = pageMissions(); break;
-          case "airdrop": node = pageAirdrop(); break;
-          case "store": node = pageStore(); break;
-          case "news": node = pageNews(); break;
-          case "about": node = pageAbout(); break;
-          case "partners": node = pagePartners(); break;
-          case "docs": node = pageDocs(); break;
-          case "token": node = pageToken(); break;
-          case "nft": node = pageNFT(); break;
-          default: node = pageHome();
+      // ---------- Language detection ----------
+      function detectLang(){
+        const stored = localStorage.getItem("ps_lang");
+        if (stored === "fa" || stored === "en") return stored;
+        // Telegram language_code
+        const lc = user && user.language_code ? user.language_code.toLowerCase() : "";
+        if (lc.startsWith("fa") || lc.startsWith("ar")) return "fa";
+        return "en";
+      }
+
+      let lang = detectLang();
+
+      function applyLang(next){
+        lang = next;
+        localStorage.setItem("ps_lang", lang);
+
+        const t = i18n[lang];
+        document.documentElement.lang = lang;
+        document.documentElement.dir = (lang === "fa") ? "rtl" : "ltr";
+
+        $("brandTitle").textContent = t.brandTitle;
+        $("brandSub").textContent = t.brandSub;
+        $("heroNote").textContent = t.heroNote;
+        $("ctxText").textContent = t.ctx;
+
+        $("btnEN").classList.toggle("active", lang==="en");
+        $("btnFA").classList.toggle("active", lang==="fa");
+
+        // Tabs labels
+        $("tabHome").textContent = t.nav.home;
+        $("tabPass").textContent = (lang==="fa") ? "پاس" : "Pass";
+        $("tabMissions").textContent = t.nav.missions;
+        $("tabStore").textContent = (lang==="fa") ? "فروشگاه" : "Store";
+        $("tabNews").textContent = t.nav.news;
+
+        // Home
+        $("homeTitle").textContent = t.homeTitle;
+        $("homeDesc").textContent = t.homeDesc;
+        $("nextActionSub").textContent = t.nextActionSub;
+
+        $("tileMissionsTitle").textContent = t.tiles.missions;
+        $("tileAirdropTitle").textContent = t.tiles.airdrop;
+        $("tileStoreTitle").textContent = t.tiles.store;
+        $("tileMissionsSub").textContent = t.tiles.msub;
+        $("tileAirdropSub").textContent = t.tiles.asub;
+        $("tileStoreSub").textContent = t.tiles.ssub;
+
+        $("chipHii").firstChild.textContent = t.chips.hii + ": ";
+        $("chipLevel").firstChild.textContent = t.chips.level + ": ";
+        $("chipMember").firstChild.textContent = t.chips.member + ": ";
+
+        // Pass
+        $("passTitle").textContent = t.passTitle;
+        $("passDesc").textContent = t.passDesc;
+        $("pidLabel").textContent = t.pidLabel;
+        $("pidLabel2").textContent = t.pidLabel;
+        $("passCardTitle").textContent = t.passCardTitle;
+        $("whyTitle").textContent = t.whyTitle;
+        $("whyBody").textContent = t.whyBody;
+        $("btnJoinPass").textContent = t.joinPass;
+        $("btnPassDocs").textContent = t.viewDocs;
+
+        // Missions
+        $("missionsTitle").textContent = t.missionsTitle;
+        $("missionsDesc").textContent = t.missionsDesc;
+
+        // Airdrop
+        $("airdropTitle").textContent = t.airdropTitle;
+        $("airdropDesc").textContent = t.airdropDesc;
+
+        // Store
+        $("storeTitle").textContent = t.storeTitle;
+        $("storeDesc").textContent = t.storeDesc;
+
+        // News
+        $("newsTitle").textContent = t.newsTitle;
+        $("newsDesc").textContent = t.newsDesc;
+        $("newsletterTitle").textContent = t.newsletterTitle;
+        $("newsletterBody").textContent = t.newsletterBody;
+        $("emailLabel").textContent = t.email;
+        $("nameLabel").textContent = t.name;
+        $("btnSubscribe").textContent = t.subscribe;
+        $("btnCopyUpdates").textContent = t.copyLink;
+
+        // Partners
+        $("partnersTitle").textContent = t.partnersTitle;
+        $("partnersDesc").textContent = t.partnersDesc;
+        $("partnersJoinTitle").textContent = t.becomePartner;
+        $("partnersJoinBody").textContent = t.partnerBody;
+        $("btnPartnerContact").textContent = t.contact;
+
+        // Token
+        $("tokenTitle").textContent = t.tokenTitle;
+        $("tokenDesc").textContent = t.tokenDesc;
+        $("convertSub").textContent = t.convertSub;
+        $("btnConvertNow").textContent = t.convert;
+
+        // NFT
+        $("nftTitle").textContent = t.nftTitle;
+        $("nftDesc").textContent = t.nftDesc;
+
+        // Docs
+        $("docsTitle").textContent = t.docsTitle;
+        $("docsDesc").textContent = t.docsDesc;
+        $("repoTitle").textContent = t.repoTitle;
+        $("repoBody").textContent = t.repoBody;
+        $("btnRepoOpen").textContent = t.open;
+        $("btnRepoCopy").textContent = t.copy;
+
+        // About
+        $("aboutTitle").textContent = t.aboutTitle;
+        $("aboutDesc").textContent = t.aboutDesc;
+
+        // converter labels
+        $("peaceAmountLabel").textContent = (lang==="fa") ? "مقدار $PEACE" : "$PEACE amount";
+        $("usdtEstLabel").textContent = (lang==="fa") ? "تخمین USDT" : "Estimated USDT";
+        $("rateLabel").textContent = t.sampleRate;
+
+        // Top nav rebuild
+        buildTopNav();
+        renderAllLists();
+      }
+
+      // ---------- Navigation ----------
+      const routes = [
+        { hash:"#home", page:"home", top:true },
+        { hash:"#pass", page:"pass", top:true },
+        { hash:"#missions", page:"missions", top:true },
+        { hash:"#airdrop", page:"airdrop", top:true },
+        { hash:"#store", page:"store", top:true },
+        { hash:"#news", page:"news", top:true },
+        { hash:"#docs", page:"docs", top:true },
+        { hash:"#partners", page:"partners", top:false },
+        { hash:"#token", page:"token", top:false },
+        { hash:"#nft", page:"nft", top:false },
+        { hash:"#about", page:"about", top:false }
+      ];
+
+      function buildTopNav(){
+        const t = i18n[lang];
+        const el = $("topNav");
+        el.innerHTML = "";
+
+        // We show the main set + compact extras (docs, token, nft) to keep header clean.
+        const order = ["home","pass","missions","airdrop","store","news","docs","about"];
+        const map = Object.fromEntries(order.map(k=>[k,true]));
+
+        const toShow = routes.filter(r => map[r.page]);
+
+        toShow.forEach(r=>{
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "navBtn";
+          btn.dataset.go = r.hash;
+          btn.textContent = t.nav[r.page] || r.page;
+          el.appendChild(btn);
+        });
+      }
+
+      function setActive(hash){
+        const target = routes.find(r=>r.hash===hash) ? hash : "#home";
+
+        // pages
+        qsa(".page").forEach(p=>p.classList.remove("active"));
+        const pid = "page-" + target.replace("#","");
+        const pageEl = $(pid);
+        if (pageEl) pageEl.classList.add("active");
+
+        // top nav
+        qsa(".navBtn").forEach(b=>{
+          b.classList.toggle("active", b.dataset.go === target);
+        });
+
+        // bottom nav
+        qsa(".tabBtn").forEach(b=>{
+          b.classList.toggle("active", b.dataset.go === target);
+        });
+
+        // update URL hash (without jumping)
+        if (location.hash !== target) history.replaceState(null,"",target);
+      }
+
+      function go(hash){
+        setActive(hash);
+        // if page is docs and user came from Convert quick button, etc, keep scroll sensible
+        window.scrollTo({ top: 0, behavior:"smooth" });
+      }
+
+      // ---------- Lists render ----------
+      function renderMissions(){
+        const t = i18n[lang];
+        const list = $("missionsList");
+        list.innerHTML = "";
+
+        const statusLabel = (s)=>{
+          if (lang==="fa"){
+            if (s==="in_progress") return "در حال انجام";
+            if (s==="ongoing") return "فعال";
+            return "آماده";
+          }
+          if (s==="in_progress") return "In progress";
+          if (s==="ongoing") return "Ongoing";
+          return "Available";
+        };
+
+        sample.missions.forEach(m=>{
+          const item = document.createElement("div");
+          item.className = "item";
+
+          const title = (lang==="fa") ? m.title_fa : m.title_en;
+          const desc = (lang==="fa") ? m.desc_fa : m.desc_en;
+
+          item.innerHTML = `
+            <div class="itemHead">
+              <div style="min-width:0">
+                <p class="itemTitle">${title}</p>
+              </div>
+              <span class="itemTag">${statusLabel(m.status)}</span>
+            </div>
+
+            <div class="itemBody">${desc}</div>
+
+            <div class="metaRow">
+              <span class="chip">${(lang==="fa") ? "ID:" : "ID:"} <b>${m.id}</b></span>
+              <span class="chip">${(lang==="fa") ? "ددلاین:" : "Deadline:"} <b>${m.deadline}</b></span>
+              <span class="chip">HII: <b>+${m.hii}</b></span>
+              <span class="chip">${(lang==="fa") ? "امتیاز:" : "Points:"} <b>${m.points}</b></span>
+            </div>
+
+            <div class="actions">
+              <button class="btn" type="button" data-join="${m.id}">${t.join}</button>
+              <button class="btn secondary" type="button" data-details="${m.id}">${t.details}</button>
+            </div>
+          `;
+
+          list.appendChild(item);
+        });
+      }
+
+      function renderStore(){
+        const list = $("storeList");
+        list.innerHTML = "";
+        sample.store.forEach(s=>{
+          const item = document.createElement("div");
+          item.className = "item";
+          item.innerHTML = `
+            <div class="itemHead">
+              <p class="itemTitle">${lang==="fa" ? s.title_fa : s.title_en}</p>
+              <span class="itemTag">${lang==="fa" ? s.tag_fa : s.tag_en}</span>
+            </div>
+            <div class="itemBody">${lang==="fa" ? s.body_fa : s.body_en}</div>
+            <div class="actions">
+              <button class="btn" type="button" data-store-open="1">${lang==="fa" ? "مشاهده (دمو)" : "Open (Demo)"}</button>
+              <button class="btn secondary" type="button" data-go="#partners">${lang==="fa" ? "همکاران" : "Partners"}</button>
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      }
+
+      function renderNews(){
+        const list = $("newsList");
+        list.innerHTML = "";
+        sample.news.forEach(n=>{
+          const item = document.createElement("div");
+          item.className = "item";
+          item.innerHTML = `
+            <div class="itemHead">
+              <p class="itemTitle">${lang==="fa" ? n.title_fa : n.title_en}</p>
+              <span class="itemTag">${n.date}</span>
+            </div>
+            <div class="itemBody">${lang==="fa" ? n.body_fa : n.body_en}</div>
+            <div class="actions">
+              <button class="btn secondary" type="button" data-go="#docs">${lang==="fa" ? "مستندات مرتبط" : "Related docs"}</button>
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      }
+
+      function renderPartners(){
+        const list = $("partnersList");
+        list.innerHTML = "";
+        sample.partners.forEach(p=>{
+          const item = document.createElement("div");
+          item.className = "item";
+          item.innerHTML = `
+            <div class="itemHead">
+              <p class="itemTitle">${lang==="fa" ? p.name_fa : p.name_en}</p>
+              <span class="itemTag">${lang==="fa" ? p.type_fa : p.type_en}</span>
+            </div>
+            <div class="itemBody">${lang==="fa" ? p.body_fa : p.body_en}</div>
+          `;
+          list.appendChild(item);
+        });
+      }
+
+      function renderDocs(){
+        const t = i18n[lang];
+        const list = $("docsList");
+        list.innerHTML = "";
+
+        // Repo link
+        const repoUrl = "https://github.com/peace-soldiers/peace-pass";
+        $("btnRepoOpen").onclick = ()=>safeOpenLink(repoUrl);
+        $("btnRepoCopy").onclick = async ()=>{
+          const ok = await copyText(repoUrl);
+          toast(ok ? (lang==="fa" ? "کپی شد" : "Copied") : (lang==="fa" ? "کپی نشد" : "Copy failed"));
+        };
+
+        sample.docs.forEach(d=>{
+          const row = document.createElement("div");
+          row.className = "item";
+          row.style.marginTop = "10px";
+
+          // Use relative path so it works on GitHub Pages (project site) and locally.
+          const fileUrl = "./" + d.file;
+
+          row.innerHTML = `
+            <div class="itemHead">
+              <p class="itemTitle">${lang==="fa" ? d.title_fa : d.title_en}</p>
+              <span class="itemTag">PDF</span>
+            </div>
+            <div class="itemBody">${lang==="fa" ? "باز کردن فایل از پوشه docs." : "Open the PDF from the docs folder."}</div>
+            <div class="actions">
+              <button class="btn" type="button" data-open="${fileUrl}">${t.open}</button>
+              <a class="btn secondary" href="${fileUrl}" download style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center">${t.download}</a>
+              <button class="btn secondary" type="button" data-copy="${fileUrl}">${t.copy}</button>
+            </div>
+          `;
+          list.appendChild(row);
+        });
+      }
+
+      function renderAllLists(){
+        renderMissions();
+        renderStore();
+        renderNews();
+        renderPartners();
+        renderDocs();
+      }
+
+      // ---------- Toast ----------
+      let toastTimer = null;
+      function toast(msg){
+        let el = document.getElementById("toast");
+        if (!el){
+          el = document.createElement("div");
+          el.id = "toast";
+          el.style.position="fixed";
+          el.style.left="50%";
+          el.style.bottom="92px";
+          el.style.transform="translateX(-50%)";
+          el.style.padding="10px 12px";
+          el.style.border="1px solid rgba(0,0,0,.12)";
+          el.style.borderRadius="999px";
+          el.style.background="rgba(255,255,255,.92)";
+          el.style.boxShadow="0 18px 44px rgba(0,0,0,.18)";
+          el.style.fontSize="12px";
+          el.style.color="rgba(0,0,0,.72)";
+          el.style.zIndex="999";
+          el.style.maxWidth="min(520px, 92vw)";
+          el.style.textAlign="center";
+          document.body.appendChild(el);
         }
+        el.textContent = msg;
+        el.style.opacity="1";
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(()=>{ el.style.opacity="0"; }, 1600);
+      }
 
-        content.appendChild(node);
-        bindInternalLinks(content);
+      // ---------- Converter ----------
+      function updateConvert(){
+        const amt = Number($("peaceAmount").value || 0);
+        const usdt = amt * sample.rate;
+        $("usdtEstimate").value = formatNum(usdt, 2);
+        $("rateVal").textContent = String(sample.rate);
+        $("convertHeadline").textContent = `${formatNum(amt,0)} $PEACE \u2192 ${formatNum(usdt,2)} USDT`;
+        $("nextActionTitle").textContent = `${formatNum(amt,0)} $PEACE \u2192 ${formatNum(usdt,2)} USDT`;
+      }
 
-        // home converter interactions
-        const peaceInput = document.getElementById("peaceAmount");
-        const usdtInput  = document.getElementById("usdtAmount");
-        if (peaceInput && usdtInput){
-          const calc = ()=>{
-            const v = Math.max(0, Number(peaceInput.value || 0));
-            const out = (v * state.rate);
-            usdtInput.value = out.toFixed(2);
-          };
-          peaceInput.addEventListener("input", calc);
-          calc();
-        }
+      // ---------- Fill user UI ----------
+      function applyUser(){
+        $("fullName").textContent = fullName;
+        $("fullName2").textContent = fullName;
+        $("peaceId").textContent = peaceId;
+        $("peaceId2").textContent = peaceId;
 
-        const convertBtnTop = document.getElementById("convertBtnTop");
-        if (convertBtnTop){
-          convertBtnTop.addEventListener("click", ()=>{
-            try{
-              if (tg) tg.showPopup({
-                title: state.lang==="fa" ? "تبدیل (دمو)" : "Convert (Demo)",
-                message: state.lang==="fa"
-                  ? "این بخش فعلاً پیش‌نمایش است. اتصال کیف‌پول و تبدیل واقعی در فاز بعد اضافه می‌شود."
-                  : "This is a preview. Wallet connection and real swaps will be added later.",
-                buttons: [{type:"ok"}]
-              });
-              else alert(state.lang==="fa" ? "دمو: تبدیل واقعی در فاز بعد اضافه می‌شود." : "Demo: real swap will be added later.");
-            }catch(e){
-              alert(state.lang==="fa" ? "دمو: تبدیل واقعی در فاز بعد اضافه می‌شود." : "Demo: real swap will be added later.");
+        // avatar initial
+        const initial = (fullName && fullName.trim().length) ? fullName.trim()[0].toUpperCase() : "P";
+        $("avatar").textContent = initial;
+        $("avatar2").textContent = initial;
+
+        // demo values
+        const hii = 694;
+        const level = "ACTIVE";
+        const pct = 46;
+
+        $("hii").textContent = String(hii);
+        $("hii2").textContent = String(hii);
+        $("chipHiiVal").textContent = String(hii);
+
+        $("level").textContent = level;
+        $("level2").textContent = level;
+        $("chipLevelVal").textContent = level;
+
+        $("progressPct").textContent = pct + "%";
+        $("progressPct2").textContent = pct + "%";
+        $("progressBar").style.width = pct + "%";
+        $("progressBar2").style.width = pct + "%";
+      }
+
+      // ---------- Event wiring ----------
+      function wireEvents(){
+        // Language buttons
+        $("btnEN").addEventListener("click", ()=>applyLang("en"));
+        $("btnFA").addEventListener("click", ()=>applyLang("fa"));
+
+        // Top nav + tiles + buttons with data-go
+        document.addEventListener("click", (e)=>{
+          const goBtn = e.target.closest("[data-go]");
+          if (goBtn){
+            e.preventDefault();
+            go(goBtn.dataset.go);
+            return;
+          }
+
+          const openBtn = e.target.closest("[data-open]");
+          if (openBtn){
+            const url = openBtn.getAttribute("data-open");
+            safeOpenLink(url);
+            return;
+          }
+
+          const copyBtn = e.target.closest("[data-copy]");
+          if (copyBtn){
+            const url = copyBtn.getAttribute("data-copy");
+            copyText(url).then(ok=>toast(ok ? (lang==="fa" ? "کپی شد" : "Copied") : (lang==="fa" ? "کپی نشد" : "Copy failed")));
+            return;
+          }
+
+          const join = e.target.closest("[data-join]");
+          if (join){
+            toast(lang==="fa" ? "ثبت شد (دمو)" : "Saved (Demo)");
+            return;
+          }
+
+          const det = e.target.closest("[data-details]");
+          if (det){
+            toast(lang==="fa" ? "جزئیات در نسخه بعدی" : "Details in next version");
+            return;
+          }
+
+          const storeOpen = e.target.closest("[data-store-open]");
+          if (storeOpen){
+            toast(lang==="fa" ? "در حال آماده‌سازی" : "Coming soon");
+            return;
+          }
+        });
+
+        // Converter quick button from home
+        $("btnConvertGo").onclick = ()=>go("#token");
+        $("btnConvertNow").onclick = ()=>toast(lang==="fa" ? "این بخش پیش‌نمایش است" : "This is a preview");
+
+        $("peaceAmount").addEventListener("input", updateConvert);
+
+        // Airdrop demo
+        $("btnAirdropCheck").onclick = ()=>toast(lang==="fa" ? "در نسخه بعدی با کیف پول" : "Wallet connect in later phase");
+
+        // Newsletter
+        $("btnSubscribe").onclick = ()=>{
+          const email = $("newsEmail").value.trim();
+          if (!email || !email.includes("@")){
+            toast(lang==="fa" ? "ایمیل معتبر وارد کن" : "Enter a valid email");
+            return;
+          }
+          toast(lang==="fa" ? "ثبت شد (دمو)" : "Subscribed (Demo)");
+          $("newsEmail").value = "";
+          $("newsName").value = "";
+        };
+        $("btnCopyUpdates").onclick = async ()=>{
+          const url = location.href.split("#")[0] + "#news";
+          const ok = await copyText(url);
+          toast(ok ? (lang==="fa" ? "کپی شد" : "Copied") : (lang==="fa" ? "کپی نشد" : "Copy failed"));
+        };
+
+        // Pass CTA
+        $("btnJoinPass").onclick = ()=>toast(lang==="fa" ? "ثبت درخواست (دمو)" : "Request saved (Demo)");
+
+        // Partners CTA
+        $("btnPartnerContact").onclick = ()=>toast(lang==="fa" ? "فرم تماس در نسخه بعدی" : "Contact form in next version");
+
+        // NFT
+        $("btnNftOpen").onclick = ()=>toast(lang==="fa" ? "صفحه NFT در نسخه بعدی" : "NFT page in next version");
+      }
+
+      // ---------- Telegram UI polish ----------
+      function setupTelegram(){
+        if (!tg) return;
+
+        try{
+          tg.ready();
+          tg.expand();
+          // Keep the mini app clean: no extra status UI inside the app content (we already removed it).
+          // Optional: adapt to theme
+          const color = "#f3f0e8";
+          if (tg.setHeaderColor) tg.setHeaderColor(color);
+          if (tg.setBackgroundColor) tg.setBackgroundColor(color);
+
+          $("runtimeTag").textContent = "Telegram";
+          $("ctxDot").style.background = "rgba(47,107,87,.75)";
+        }catch(e){}
+      }
+
+      // ---------- Init ----------
+      function init(){
+        setupTelegram();
+        applyUser();
+
+        // Build top nav first, then language apply
+        buildTopNav();
+        wireEvents();
+        applyLang(lang);
+
+        // Converter init
+        $("rateVal").textContent = String(sample.rate);
+        updateConvert();
+
+        // hash routing
+        const h = location.hash || "#home";
+        setActive(h);
+
+        window.addEventListener("hashchange", ()=>setActive(location.hash || "#home"));
+
+        // Make tiles keyboard accessible
+        qsa(".tile").forEach(t=>{
+          t.addEventListener("keydown",(e)=>{
+            if (e.key==="Enter" || e.key===" "){
+              e.preventDefault();
+              go(t.dataset.go);
             }
           });
-        }
+        });
+
+        // Force Persian button visibility on mobile (common issue: overflow/width)
+        // This code ensures the language segment stays present and clickable.
+        requestAnimationFrame(()=>{
+          $("btnEN").style.minWidth = "44px";
+          $("btnFA").style.minWidth = "44px";
+        });
+
+        // Fix doc links anywhere that still point to netlify (if user copied older code)
+        // (No-op here, but kept safe)
       }
 
-      // language buttons
-      document.getElementById("btnEN").addEventListener("click", ()=> setLang("en"));
-      document.getElementById("btnFA").addEventListener("click", ()=> setLang("fa"));
+      init();
 
-      // boot
-      hydrateUser();
-      const initialLang = detectLang();
-      setLang(initialLang);
-
-      function onHash(){
-        const r = currentHash();
-        renderRoute(r);
-      }
-      window.addEventListener("hashchange", onHash);
-      onHash();
+      // Expose a small debug hook if needed
+      window.PS = {
+        go,
+        setLang: applyLang
+      };
     })();
   </script>
 </body>
